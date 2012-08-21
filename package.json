@@ -1,0 +1,22 @@
+{
+  "author": "Josh Perez <josh@goatslacker.com> (http://www.goatslacker.com)",
+  "name": "lz",
+  "description": "Lazy functional programming",
+  "version": "0.0.0",
+  "repository": {
+    "url": "git://github.com/goatslacker/lz.git"
+  },
+  "main": "src/lz.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "forge": {
+    "compress": true
+  }
+}
