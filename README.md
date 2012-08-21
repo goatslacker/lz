@@ -1,0 +1,4 @@
+lz
+==
+
+lazy and functional
