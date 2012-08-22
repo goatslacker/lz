@@ -12,6 +12,13 @@ function lz(list) {
   }
 }
 
+Object.defineProperty(Array.prototype, 'lz', {
+  value: function () {
+    return new lz(this)
+  },
+  enumerable: false
+});
+
 lz.prototype.valueOf = function () {
   if (this._value) {
     return this._value

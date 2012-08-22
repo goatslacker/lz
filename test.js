@@ -204,6 +204,13 @@ lz_tests({
       .head(),
       3
     )
+  },
+
+  'array': function () {
+    assert.equal(
+      [1, 2, 3].lz().head(),
+      1
+    )
   }
 })
 
