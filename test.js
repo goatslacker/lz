@@ -131,18 +131,6 @@ lz_tests({
     )
   },
 
-  'valueof': function () {
-    console.log(
-    lz(a)
-    .filter(function (n) { return n % 10 === 0 })
-    );
-    assert.deepEqual(
-      lz(a)
-      .filter(function (n) { return n % 10 === 0 }),
-      [10, 20]
-    )
-  },
-
   'zipWith': function () {
     assert.deepEqual(
       lz.zipWith(
@@ -173,6 +161,48 @@ lz_tests({
       )
       .take(3),
       [-2, 0, 2]
+    )
+
+    assert.deepEqual(
+      lz.zipWith(
+        function (a, b) { return a - b },
+        [1, 2, 3],
+        [3, 2, 1]
+      )
+      .all(),
+      [-2, 0, 2]
+    )
+
+    assert.deepEqual(
+      lz.zipWith(
+        function (a, b) { return a - b },
+        [1, 2, 3, 4, 6, 8],
+        [3, 2, 1]
+      )
+      .take(40),
+      [-2, 0, 2]
+    )
+
+    // taking more with zipWith
+    assert.deepEqual(
+      lz.zipWith(
+        function (a, b) { return a - b },
+        lz([1, 2, 3, 4, 6, 8]),
+        lz([3, 2, 1])
+      )
+      .all(),
+      [-2, 0, 2]
+    )
+
+    // inline
+    assert.equal(
+      lz([1])
+      .zipWith(
+        function (a, b) { return a + b },
+        [2]
+      )
+      .head(),
+      3
     )
   }
 })
