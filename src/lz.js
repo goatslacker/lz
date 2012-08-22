@@ -3,7 +3,7 @@ var UNDEFINED = {}
 function lz(list) {
   this.fn = []
   this.i = 0
-  this.len = list.length
+  this.length = list.length
 
   this.list = list
 
@@ -22,7 +22,7 @@ lz.prototype.valueOf = function () {
 
 lz.prototype.next = function () {
   var item = this.list[this.i++]
-  if (this.i > this.len) return UNDEFINED
+  if (this.i > this.length) return UNDEFINED
   for (var j = 0; j < this.fn.length; j += 1) {
     item = this.fn[j](item)
   }
@@ -77,12 +77,16 @@ lz.prototype.take = function (n) {
 }
 
 lz.prototype.all = function () {
-  return this.take(this.len)
+  return this.take(this.length)
+}
+
+lz.prototype.zipWith = function (fn, list) {
+  return lz.zipWith(fn, list, this.list)
 }
 
 lz.range = function (start, end) {
   var i = new lz([])
-  i.len = end
+  i.length = end
   i._next = i.next
   i.next = function () {
     this.list.push(this.i + start)
@@ -93,9 +97,11 @@ lz.range = function (start, end) {
 
 lz.cycle = function (list) {
   var z = new lz(list)
+  var length = list.length
+  z.length = Infinity
   z._next = z.next
   z.next = function () {
-    if (this.i === this.len) {
+    if (this.i === length) {
       this.i = 0
     }
     return this._next()
@@ -105,16 +111,17 @@ lz.cycle = function (list) {
 
 lz.zipWith = function (fn, list1, list2) {
   var z = new lz([])
+  z.length = list1.length < list2.length ? list1.length : list2.length
 
   if (!(list1 instanceof lz) && !(list2 instanceof lz)) {
     z.next = function () {
+      if (this.i >= this.length) return UNDEFINED
       return fn(list1[this.i], list2[this.i++])
     }
     return z
   } else {
     if (!(list1 instanceof lz)) list1 = lz(list1)
     if (!(list2 instanceof lz)) list2 = lz(list2)
-    z.len = list1.len > list2.len ? list1.len : list2.len
     z._next = z.next
     z.next = function () {
       this.list.push(fn(list1.next(), list2.next()))
