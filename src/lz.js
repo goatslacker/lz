@@ -115,14 +115,11 @@ lz.prototype.takeWhile = function (fn) {
   return results
 }
 
-//lz.prototype.foldl
 //lz.prototype.foldr
 //lz.prototype.each ?
 //lz.prototype.any
 //lz.prototype.some
 //lz.prototype.drop
-//lz.prototype.has
-//lz.prototype.takeWhile
 //lz.prototype.dropWhile
 //lz.prototype.reverse
 
@@ -140,8 +137,31 @@ lz.prototype.take = function (n) {
   return results
 }
 
+lz.prototype.drop = function (n) {
+  this.i = n
+  var results = []
+  var item
+  n = 0
+  while (n < this.length) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n += 1
+  }
+  return results
+}
+
 lz.prototype.all = function () {
-  return this.take(this.length)
+  var results = []
+  var item
+  var n = 0
+  while (n < this.length) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n += 1
+  }
+  return results
 }
 
 lz.prototype.zipWith = function (fn, list) {
