@@ -77,6 +77,18 @@ lz.prototype.tail = function () {
   return result
 }
 
+lz.prototype.foldl = function (fn) {
+  var result, next
+  result = this.next()
+  if (result === UNDEFINED) return null
+  while (true) {
+    next = this.next()
+    if (next === UNDEFINED) break
+    result = fn(result, next)
+  }
+  return result
+}
+
 lz.prototype.has = function (n) {
   var item
   while (true) {
