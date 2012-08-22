@@ -87,6 +87,22 @@ lz.prototype.has = function (n) {
   return false
 }
 
+lz.prototype.takeWhile = function (fn) {
+  var results = []
+  var result
+  var item
+
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    result = fn(item)
+    if (result === true) results.push(item)
+    else break
+  }
+
+  return results
+}
+
 //lz.prototype.foldl
 //lz.prototype.foldr
 //lz.prototype.each ?
