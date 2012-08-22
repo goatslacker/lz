@@ -14,6 +14,13 @@ exports.cycle = function (lz, assert) {
   )
 }
 
+exports.chained = function (lz, assert) {
+  assert.equal(
+    [1, 2, 3].lz().cycle().take(3).lz().last(),
+    3
+  )
+}
+
 exports.fizzbuzz = function (lz, assert) {
   var three = lz.cycle(['', '', 'fizz'])
   var five = lz.cycle(['', '', '', '', 'buzz'])

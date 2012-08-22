@@ -103,6 +103,10 @@ lz.prototype.zipWith = function (fn, list) {
   return lz.zipWith(fn, list, this.list)
 }
 
+lz.prototype.cycle = function () {
+  return lz.cycle(this.list)
+}
+
 lz.range = function (start, end) {
   var i = new lz([])
   i.length = end
