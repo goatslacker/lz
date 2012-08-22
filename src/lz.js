@@ -55,6 +55,18 @@ lz.prototype.head = function () {
   return (item = this.next()) === UNDEFINED ? null : item
 }
 
+lz.prototype.last = function () {
+  var n = 0
+  var item
+  var result
+  while (n < this.length) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    result = item
+  }
+  return result
+}
+
 //lz.prototype.foldl
 //lz.prototype.foldr
 //lz.prototype.each ?
