@@ -77,14 +77,21 @@ lz.prototype.tail = function () {
   return result
 }
 
+lz.prototype.has = function (n) {
+  var item
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    if (item === n) return true
+  }
+  return false
+}
+
 //lz.prototype.foldl
 //lz.prototype.foldr
 //lz.prototype.each ?
 //lz.prototype.any
 //lz.prototype.some
-//lz.prototype.init
-//lz.prototype.tail
-//lz.prototype.last
 //lz.prototype.drop
 //lz.prototype.has
 //lz.prototype.takeWhile
