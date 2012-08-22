@@ -67,6 +67,16 @@ lz.prototype.last = function () {
   return result
 }
 
+lz.prototype.init = function () {
+  return this.take(this.length - 1)
+}
+
+lz.prototype.tail = function () {
+  var result = this.all()
+  result.shift()
+  return result
+}
+
 //lz.prototype.foldl
 //lz.prototype.foldr
 //lz.prototype.each ?
