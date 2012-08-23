@@ -13,11 +13,11 @@ exports.last = function (lz, assert) {
 }
 
 exports.tail = function (lz, assert) {
-  assert.deepEqual(arr.lz().tail(), tail)
+  assert.deepEqual(arr.lz().tail().$(), tail)
 }
 
 exports.init = function (lz, assert) {
-  assert.deepEqual(arr.lz().init(), init)
+  assert.deepEqual(arr.lz().init().$(), init)
 }
 
 exports.has = function (lz, assert) {

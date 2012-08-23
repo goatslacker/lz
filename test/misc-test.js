@@ -10,13 +10,13 @@ exports.array = function (lz, assert) {
 
 exports.strings = function (lz, assert) {
   assert.equal(lz('hello').head(), 'h')
-  assert.deepEqual(lz('hello').take(3).list, ['h', 'e', 'l'])
+  assert.deepEqual(lz('hello').take(3).$(), ['h', 'e', 'l'])
 }
 
 exports.args = function (lz, assert) {
   (function () {
     assert.equal(lz(arguments).head(), 1)
-    assert.deepEqual(lz(arguments).take(2).list, [1, 2])
+    assert.deepEqual(lz(arguments).take(2).$(), [1, 2])
   }(1, 2, 3))
 }
 

@@ -51,11 +51,13 @@ lz.prototype.map = function (f) {
   return this
 }
 
+// @value
 lz.prototype.head = function () {
   var item
   return (item = this.next()) === UNDEFINED ? null : item
 }
 
+// @value
 lz.prototype.last = function () {
   var n = 0
   var item
@@ -68,18 +70,17 @@ lz.prototype.last = function () {
   return result
 }
 
-// return this
 lz.prototype.init = function () {
-  return this.take(this.length - 1).list
+  return this.take(this.length - 1)
 }
 
-// return this
+// FIXME
 lz.prototype.tail = function () {
-  var result = this.all()
-  result.shift()
-  return result
+//  this.i += 1
+//  return this.take(this.length)
 }
 
+// @value
 lz.prototype.foldl = function (fn) {
   var result, next
   result = this.next()
@@ -92,6 +93,7 @@ lz.prototype.foldl = function (fn) {
   return result
 }
 
+// @value
 lz.prototype.has = function (n) {
   var item
   while (true) {
@@ -102,7 +104,6 @@ lz.prototype.has = function (n) {
   return false
 }
 
-// return this
 lz.prototype.takeWhile = function (fn) {
   var results = []
   var result
@@ -116,7 +117,14 @@ lz.prototype.takeWhile = function (fn) {
     else break
   }
 
-  return results
+  this.list = results
+
+  // resset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
 }
 
 //lz.prototype.foldr
@@ -138,27 +146,29 @@ lz.prototype.take = function (n) {
     results.push(item)
     n -= 1
   }
+
   this.list = results
+
+  // reset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
   return this
 }
 
 // return this
+// TODO this is a sucky drop because it has to possibly take more than
+// what it will drop
+/*
 lz.prototype.drop = function (n) {
-  this.i = n
-  var results = []
-  var item
-  n = 0
-  while (n < this.length) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    results.push(item)
-    n += 1
-  }
-  return results
 }
+*/
 
 // should probably return this.list
 // return this
+// FIXME
+/*
 lz.prototype.all = function () {
   var results = []
   var item
@@ -171,6 +181,7 @@ lz.prototype.all = function () {
   }
   return results
 }
+*/
 
 lz.prototype.zipWith = function (fn, list) {
   return lz.zipWith(fn, list, this.list)
@@ -178,6 +189,11 @@ lz.prototype.zipWith = function (fn, list) {
 
 lz.prototype.cycle = function () {
   return lz.cycle(this.list)
+}
+
+// FIXME
+lz.prototype.$ = lz.prototype.toArray = function () {
+  return this.list
 }
 
 lz.range = function (start, end) {
