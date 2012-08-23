@@ -17,7 +17,7 @@ Object.defineProperty(Array.prototype, 'lz', {
     return new lz(this)
   },
   enumerable: false
-});
+})
 
 lz.prototype.valueOf = function () {
   if (this._value) {
