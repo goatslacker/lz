@@ -9,7 +9,8 @@ exports.ranges = function (lz, assert) {
   assert.deepEqual(
     lz.range(1, 10)
     .map(function (n) { return n * n })
-    .take(4),
+    .take(4)
+    .list,
     [1, 4, 9, 16]
   )
 }

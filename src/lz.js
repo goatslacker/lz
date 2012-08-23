@@ -68,10 +68,12 @@ lz.prototype.last = function () {
   return result
 }
 
+// return this
 lz.prototype.init = function () {
-  return this.take(this.length - 1)
+  return this.take(this.length - 1).list
 }
 
+// return this
 lz.prototype.tail = function () {
   var result = this.all()
   result.shift()
@@ -100,6 +102,7 @@ lz.prototype.has = function (n) {
   return false
 }
 
+// return this
 lz.prototype.takeWhile = function (fn) {
   var results = []
   var result
@@ -135,9 +138,11 @@ lz.prototype.take = function (n) {
     results.push(item)
     n -= 1
   }
-  return results
+  this.list = results
+  return this
 }
 
+// return this
 lz.prototype.drop = function (n) {
   this.i = n
   var results = []
@@ -152,6 +157,8 @@ lz.prototype.drop = function (n) {
   return results
 }
 
+// should probably return this.list
+// return this
 lz.prototype.all = function () {
   var results = []
   var item

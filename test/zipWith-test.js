@@ -5,7 +5,8 @@ exports.zipWith = function (lz, assert) {
       lz([1, 2, 3]),
       lz([3, 2, 1])
     )
-    .take(3),
+    .take(3)
+    .list,
     [-2, 0, 2]
   )
 
@@ -37,7 +38,8 @@ exports.fastZipWith = function (lz, assert) {
       [1, 2, 3, 4, 6, 8],
       [3, 2, 1]
     )
-    .take(3),
+    .take(3)
+    .list,
     [-2, 0, 2]
   )
 
@@ -57,7 +59,8 @@ exports.fastZipWith = function (lz, assert) {
       [1, 2, 3, 4, 6, 8],
       [3, 2, 1]
     )
-    .take(40),
+    .take(40)
+    .list,
     [-2, 0, 2]
   )
 }

@@ -25,7 +25,7 @@ exports.falsy = function (lz, assert) {
 exports.notdefined = function (lz, assert) {
   // undefined
   assert.deepEqual(
-    lz([false, undefined, undefined]).take(3),
+    lz([false, undefined, undefined]).take(3).list,
     [false, undefined, undefined]
   )
 }
