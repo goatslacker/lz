@@ -32,6 +32,7 @@ lz.prototype.next = function () {
 }
 
 lz.prototype.filter = function (f) {
+  this._value = null
   this.fn.push(function (x) {
     if (f(x) === true) return x
     else return FALSE
@@ -40,6 +41,7 @@ lz.prototype.filter = function (f) {
 }
 
 lz.prototype.map = function (f) {
+  this._value = null
   this.fn.push(function (x) { return f(x) })
   return this
 }
@@ -77,7 +79,7 @@ lz.prototype.init = function () {
 
   results.pop()
 
-  this.list = results
+  this.list = this._value = results
 
   // reset
   this.fn = []
@@ -101,7 +103,7 @@ lz.prototype.tail = function () {
 
   results.shift()
 
-  this.list = results
+  this.list = this._value = results
 
   // reset
   this.fn = []
@@ -148,7 +150,7 @@ lz.prototype.takeWhile = function (fn) {
     else break
   }
 
-  this.list = results
+  this.list = this._value = results
 
   // resset
   this.fn = []
@@ -179,7 +181,7 @@ lz.prototype.take = function (n) {
     n -= 1
   }
 
-  this.list = results
+  this.list = this._value = results
 
   // reset
   this.fn = []
@@ -190,6 +192,7 @@ lz.prototype.take = function (n) {
 }
 
 lz.prototype.drop = function (n) {
+  this._value = null
   var item
 
   while (n > 0) {
