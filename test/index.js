@@ -23,6 +23,7 @@ var Suites = {
     var start = Date.now()
     var _ = this
     var color = 'green'
+    var i = 0
     suites.forEach(function (file) {
       var tests
       if (!(_.rx.test(file))) {
@@ -32,6 +33,7 @@ var Suites = {
       fileName = file.replace(_.rx, '')
       console.log('\n' + fileName, '::')
       Object.keys(tests).forEach(function (test) {
+        i += 1
         try {
           tests[test](lz, assert, lists)
         } catch (e) {
@@ -43,7 +45,7 @@ var Suites = {
         console.log('\t', _.green(test), '√')
       })
     })
-    console.log(_[color]('\nDone!'))
+    console.log(_[color]('\nDone!'), i, 'Tests')
     console.log('Time ' + (Date.now() - start) + 'ms')
   }
 }
