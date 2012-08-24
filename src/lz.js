@@ -1,4 +1,5 @@
 var UNDEFINED = {}
+var FALSE = {}
 
 function lz(list) {
   this.fn = []
@@ -32,15 +33,15 @@ lz.prototype.next = function () {
   if (this.i > this.length) return UNDEFINED
   for (var j = 0; j < this.fn.length; j += 1) {
     item = this.fn[j](item)
+    if (item === FALSE) return this.next()
   }
   return item
 }
 
 lz.prototype.filter = function (f) {
-  var _ = this
   this.fn.push(function (x) {
     if (f(x) === true) return x
-    else return _.next()
+    else return FALSE
   })
   return this
 }
