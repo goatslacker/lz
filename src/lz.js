@@ -20,19 +20,12 @@ Object.defineProperty(Array.prototype, 'lz', {
   enumerable: false
 })
 
-lz.prototype.valueOf = function () {
-  if (this._value) {
-    return this._value
-  }
-
-  return this._value = this.all()
-}
-
 lz.prototype.next = function () {
   var item = this.list[this.i++]
   if (this.i > this.length) return UNDEFINED
   for (var j = 0; j < this.fn.length; j += 1) {
     item = this.fn[j](item)
+    // FIXME
     if (item === FALSE) return this.next()
   }
   return item
@@ -71,13 +64,51 @@ lz.prototype.last = function () {
 }
 
 lz.prototype.init = function () {
-  return this.take(this.length - 1)
+  var results = []
+  var item
+  var n = this.length
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n -= 1
+  }
+
+  results.pop()
+
+  this.list = results
+
+  // reset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
 }
 
-// FIXME
 lz.prototype.tail = function () {
-//  this.i += 1
-//  return this.take(this.length)
+  var results = []
+  var item
+  var n = this.length
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n -= 1
+  }
+
+  results.shift()
+
+  this.list = results
+
+  // reset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
 }
 
 // @value
@@ -140,6 +171,7 @@ lz.prototype.takeWhile = function (fn) {
 lz.prototype.take = function (n) {
   var results = []
   var item
+
   while (n > 0) {
     item = this.next()
     if (item === UNDEFINED) break
@@ -157,31 +189,45 @@ lz.prototype.take = function (n) {
   return this
 }
 
-// return this
-// TODO this is a sucky drop because it has to possibly take more than
-// what it will drop
-/*
 lz.prototype.drop = function (n) {
-}
-*/
+  var item
 
-// should probably return this.list
-// return this
-// FIXME
-/*
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    n -= 1
+  }
+
+  this.list = this.list.slice(this.i)
+
+  // partial reset
+  this.i = 0
+  this.length = this.list.length
+
+  return this
+}
+
 lz.prototype.all = function () {
   var results = []
   var item
-  var n = 0
-  while (n < this.length) {
+  var n = this.length
+
+  while (n > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     results.push(item)
-    n += 1
+    n -= 1
   }
-  return results
+
+  this.list = this._value = results
+
+  // reset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
 }
-*/
 
 lz.prototype.zipWith = function (fn, list) {
   return lz.zipWith(fn, list, this.list)
@@ -191,9 +237,25 @@ lz.prototype.cycle = function () {
   return lz.cycle(this.list)
 }
 
-// FIXME
 lz.prototype.$ = lz.prototype.toArray = function () {
-  return this.list
+  if (this._value) {
+    return this._value
+  }
+
+  var results = []
+  var item
+  var n = this.length
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n -= 1
+  }
+
+  this._value = results
+
+  return results
 }
 
 lz.range = function (start, end) {
