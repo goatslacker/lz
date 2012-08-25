@@ -1,5 +1,5 @@
-var UNDEFINED = new Object()
-var FALSE = new Object()
+var UNDEFINED = {}
+var FALSE = {}
 
 function lz(list) {
   this.fn = []
