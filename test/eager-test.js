@@ -70,3 +70,29 @@ exports['tail and more'] = function (lz, assert) {
     [3]
   )
 }
+
+exports.and = function (lz, assert) {
+  assert.equal(
+    [true, true, true, true]
+    .lz()
+    .and(),
+    true
+  )
+
+  assert.equal(
+    [true, true, false, true]
+    .lz()
+    .and(),
+    false
+  )
+}
+
+exports['and + more'] = function (lz, assert) {
+  assert.equal(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .lz()
+    .map(function (n) { return n % 2 === 0 })
+    .and(),
+    false
+  )
+}

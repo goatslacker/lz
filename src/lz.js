@@ -65,6 +65,19 @@ lz.prototype.last = function () {
   return result
 }
 
+// @value
+lz.prototype.and = function () {
+  var item
+
+  while (true) {
+    item = this.next()
+    if (item === false) return false
+    if (item === UNDEFINED) break
+  }
+
+  return true
+}
+
 lz.prototype.init = function () {
   var results = []
   var item
