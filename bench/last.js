@@ -17,9 +17,7 @@ function _lz() {
 
 assert.deepEqual(_lodash(), _lz())
 
-exports.compare = {
+require('./')({
   'lodash': _lodash,
   'lz': _lz
-}
-
-require('bench').runMain()
+})

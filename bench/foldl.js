@@ -29,11 +29,9 @@ function _wu() {
 assert.deepEqual(_lodash(), _lz())
 assert.deepEqual(_lz(), _wu())
 
-exports.compare = {
+require('./')({
   'lodash': _lodash,
   'lodash chained': _lodash_chained,
   'lz': _lz,
   'wu': _wu
-}
-
-require('bench').runMain()
+})
