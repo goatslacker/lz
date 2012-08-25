@@ -25,8 +25,17 @@ lz.prototype.next = function () {
   if (this.i > this.length) return UNDEFINED
   for (var j = 0; j < this.fn.length; j += 1) {
     item = this.fn[j](item)
-    // FIXME
     if (item === FALSE) return this.next()
+  }
+  return item
+}
+
+lz.prototype.prev = function () {
+  var item = this.list[--this.i]
+  if (this.i === -1) return UNDEFINED
+  for (var j = 0; j < this.fn.length; j += 1) {
+    item = this.fn[j](item)
+    if (item === FALSE) return this.prev()
   }
   return item
 }
@@ -54,15 +63,9 @@ lz.prototype.head = function () {
 
 // @value
 lz.prototype.last = function () {
-  var n = 0
   var item
-  var result
-  while (n < this.length) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    result = item
-  }
-  return result
+  this.i = this.length
+  return (item = this.prev()) === UNDEFINED ? null : item
 }
 
 // @value
