@@ -346,6 +346,19 @@ lz.cycle = function (list) {
   return z
 }
 
+lz.iterate = function (fn, n) {
+  var z = new lz([])
+  var result
+  z.length = Infinity
+  z._next = z.next
+  z.next = function () {
+    result = fn(result) || n
+    this.list.push(result)
+    return this._next()
+  }
+  return z
+}
+
 lz.range = function (start, end) {
   var i = new lz([])
   i.length = end
