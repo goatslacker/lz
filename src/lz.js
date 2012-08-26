@@ -285,6 +285,19 @@ lz.prototype.last = function () {
   return (item = this.prev()) === UNDEFINED ? null : item
 }
 
+// @value
+lz.prototype.or = function () {
+  var item
+
+  while (true) {
+    item = this.next()
+    if (item === true) return true
+    if (item === UNDEFINED) break
+  }
+
+  return false
+}
+
 
 lz.cycle = function (list) {
   var z = new lz(list)

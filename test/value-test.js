@@ -112,3 +112,19 @@ exports.any = function (lz, assert) {
     false
   )
 }
+
+exports.or = function (lz, assert) {
+  assert.equal(
+    [false, false, false, false]
+    .lz()
+    .or(),
+    false
+  )
+
+  assert.equal(
+    [false, false, true, false]
+    .lz()
+    .or(),
+    true
+  )
+}
