@@ -262,7 +262,7 @@ lz.prototype.foldl = function (fn) {
 }
 
 // @value
-lz.prototype.has = function (n) {
+lz.prototype.elem = function (n) {
   var item
   while (true) {
     item = this.next()

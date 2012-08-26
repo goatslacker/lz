@@ -20,9 +20,9 @@ exports.init = function (lz, assert) {
   assert.deepEqual(arr.lz().init().$(), init)
 }
 
-exports.has = function (lz, assert) {
-  assert.equal(arr.lz().has(5), true)
-  assert.equal(arr.lz().has(6), false)
+exports.elem = function (lz, assert) {
+  assert.equal(arr.lz().elem(5), true)
+  assert.equal(arr.lz().elem(6), false)
 }
 
 exports['tail and more'] = function (lz, assert) {

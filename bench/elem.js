@@ -11,7 +11,7 @@ function _lodash() {
 }
 
 function _lz() {
-  return new lz(a).has(5)
+  return new lz(a).elem(5)
 }
 
 function _wu() {
