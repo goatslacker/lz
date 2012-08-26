@@ -1,3 +1,4 @@
+/*jshint asi: true */
 var UNDEFINED = {}
 var FALSE = {}
 
@@ -41,28 +42,6 @@ lz.prototype.$ = lz.prototype.toArray = function () {
   return results
 }
 
-lz.prototype.all = function () {
-  var results = []
-  var item
-  var n = this.length
-
-  while (n > 0) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    results.push(item)
-    n -= 1
-  }
-
-  this.list = this._value = results
-
-  // reset
-  this.fn = []
-  this.i = 0
-  this.length = this.list.length
-
-  return this
-}
-
 lz.prototype.cycle = function () {
   return lz.cycle(this.list)
 }
@@ -73,11 +52,36 @@ lz.prototype.drop = function (n) {
 
   while (n > 0) {
     item = this.next()
-    if (item === UNDEFINED) break
+    if (item === UNDEFINED) {
+      this._value = []
+      return this
+    }
     n -= 1
   }
 
   this.list = this.list.slice(this.i)
+
+  // partial reset
+  this.i = 0
+  this.length = this.list.length
+
+  return this
+}
+
+lz.prototype.dropWhile = function (fn) {
+  this._value = null
+  var item
+
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) {
+      this._value = []
+      return this
+    }
+    if (fn(item) === false) break
+  }
+
+  this.list = this.list.slice(this.i - 1)
 
   // partial reset
   this.i = 0
@@ -205,7 +209,7 @@ lz.prototype.takeWhile = function (fn) {
 
   this.list = this._value = results
 
-  // resset
+  // reset
   this.fn = []
   this.i = 0
   this.length = this.list.length

@@ -39,7 +39,6 @@ exports.fastZipWith = function (lz, assert) {
       [3, 2, 1]
     )
     .take(3)
-    .all()
     .$(),
     [-2, 0, 2]
   )
