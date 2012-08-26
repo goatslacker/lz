@@ -96,3 +96,19 @@ exports['and + more'] = function (lz, assert) {
     false
   )
 }
+
+exports.any = function (lz, assert) {
+  assert.equal(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .lz()
+    .any(function (n) { return n === 5 }),
+    true
+  )
+
+  assert.equal(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .lz()
+    .any(function (n) { return n > 10 }),
+    false
+  )
+}

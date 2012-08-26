@@ -236,6 +236,19 @@ lz.prototype.and = function () {
 }
 
 // @value
+lz.prototype.any = function (fn) {
+  var item
+
+  while (true) {
+    item = this.next()
+    if (fn(item) === true) return true
+    if (item === UNDEFINED) return false
+  }
+
+  return false
+}
+
+// @value
 lz.prototype.foldl = function (fn) {
   var result, next
   result = this.next()
