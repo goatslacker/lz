@@ -149,6 +149,13 @@ lz.prototype.prev = function () {
   return item
 }
 
+lz.prototype.scanl = function (fn) {
+  this._value = null
+  var prev
+  this.fn.push(function (x) { return (prev = fn(prev, x) || x) })
+  return this
+}
+
 lz.prototype.tail = function () {
   var results = []
   var item
