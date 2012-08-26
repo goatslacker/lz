@@ -20,24 +20,70 @@ Object.defineProperty(Array.prototype, 'lz', {
   enumerable: false
 })
 
-lz.prototype.next = function () {
-  var item = this.list[this.i++]
-  if (this.i > this.length) return UNDEFINED
-  for (var j = 0; j < this.fn.length; j += 1) {
-    item = this.fn[j](item)
-    if (item === FALSE) return this.next()
+lz.prototype.$ = lz.prototype.toArray = function () {
+  if (this._value) {
+    return this._value
   }
-  return item
+
+  var results = []
+  var item
+  var n = this.length
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n -= 1
+  }
+
+  this._value = results
+
+  return results
 }
 
-lz.prototype.prev = function () {
-  var item = this.list[--this.i]
-  if (this.i === -1) return UNDEFINED
-  for (var j = 0; j < this.fn.length; j += 1) {
-    item = this.fn[j](item)
-    if (item === FALSE) return this.prev()
+lz.prototype.all = function () {
+  var results = []
+  var item
+  var n = this.length
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n -= 1
   }
-  return item
+
+  this.list = this._value = results
+
+  // reset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
+}
+
+lz.prototype.cycle = function () {
+  return lz.cycle(this.list)
+}
+
+lz.prototype.drop = function (n) {
+  this._value = null
+  var item
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    n -= 1
+  }
+
+  this.list = this.list.slice(this.i)
+
+  // partial reset
+  this.i = 0
+  this.length = this.list.length
+
+  return this
 }
 
 lz.prototype.filter = function (f) {
@@ -47,38 +93,6 @@ lz.prototype.filter = function (f) {
     else return FALSE
   })
   return this
-}
-
-lz.prototype.map = function (f) {
-  this._value = null
-  this.fn.push(function (x) { return f(x) })
-  return this
-}
-
-// @value
-lz.prototype.head = function () {
-  var item
-  return (item = this.next()) === UNDEFINED ? null : item
-}
-
-// @value
-lz.prototype.last = function () {
-  var item
-  this.i = this.length
-  return (item = this.prev()) === UNDEFINED ? null : item
-}
-
-// @value
-lz.prototype.and = function () {
-  var item
-
-  while (true) {
-    item = this.next()
-    if (item === false) return false
-    if (item === UNDEFINED) break
-  }
-
-  return true
 }
 
 lz.prototype.init = function () {
@@ -105,6 +119,32 @@ lz.prototype.init = function () {
   return this
 }
 
+lz.prototype.map = function (f) {
+  this._value = null
+  this.fn.push(function (x) { return f(x) })
+  return this
+}
+
+lz.prototype.next = function () {
+  var item = this.list[this.i++]
+  if (this.i > this.length) return UNDEFINED
+  for (var j = 0; j < this.fn.length; j += 1) {
+    item = this.fn[j](item)
+    if (item === FALSE) return this.next()
+  }
+  return item
+}
+
+lz.prototype.prev = function () {
+  var item = this.list[--this.i]
+  if (this.i === -1) return UNDEFINED
+  for (var j = 0; j < this.fn.length; j += 1) {
+    item = this.fn[j](item)
+    if (item === FALSE) return this.prev()
+  }
+  return item
+}
+
 lz.prototype.tail = function () {
   var results = []
   var item
@@ -127,6 +167,68 @@ lz.prototype.tail = function () {
   this.length = this.list.length
 
   return this
+}
+
+lz.prototype.take = function (n) {
+  var results = []
+  var item
+
+  while (n > 0) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    results.push(item)
+    n -= 1
+  }
+
+  this.list = this._value = results
+
+  // reset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
+}
+
+lz.prototype.takeWhile = function (fn) {
+  var results = []
+  var result
+  var item
+
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    result = fn(item)
+    if (result === true) results.push(item)
+    else break
+  }
+
+  this.list = this._value = results
+
+  // resset
+  this.fn = []
+  this.i = 0
+  this.length = this.list.length
+
+  return this
+}
+
+lz.prototype.zipWith = function (fn, list) {
+  return lz.zipWith(fn, list, this.list)
+}
+
+
+// @value
+lz.prototype.and = function () {
+  var item
+
+  while (true) {
+    item = this.next()
+    if (item === false) return false
+    if (item === UNDEFINED) break
+  }
+
+  return true
 }
 
 // @value
@@ -153,140 +255,19 @@ lz.prototype.has = function (n) {
   return false
 }
 
-lz.prototype.takeWhile = function (fn) {
-  var results = []
-  var result
+// @value
+lz.prototype.head = function () {
   var item
-
-  while (true) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    result = fn(item)
-    if (result === true) results.push(item)
-    else break
-  }
-
-  this.list = this._value = results
-
-  // resset
-  this.fn = []
-  this.i = 0
-  this.length = this.list.length
-
-  return this
+  return (item = this.next()) === UNDEFINED ? null : item
 }
 
-//lz.prototype.foldr
-//lz.prototype.each ?
-//lz.prototype.any
-//lz.prototype.some
-//lz.prototype.drop
-//lz.prototype.dropWhile
-//lz.prototype.reverse
-
-//lz utils, not lazy but whatever. include lz.memoize, lz.flatten, etc.
-
-lz.prototype.take = function (n) {
-  var results = []
+// @value
+lz.prototype.last = function () {
   var item
-
-  while (n > 0) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    results.push(item)
-    n -= 1
-  }
-
-  this.list = this._value = results
-
-  // reset
-  this.fn = []
-  this.i = 0
-  this.length = this.list.length
-
-  return this
+  this.i = this.length
+  return (item = this.prev()) === UNDEFINED ? null : item
 }
 
-lz.prototype.drop = function (n) {
-  this._value = null
-  var item
-
-  while (n > 0) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    n -= 1
-  }
-
-  this.list = this.list.slice(this.i)
-
-  // partial reset
-  this.i = 0
-  this.length = this.list.length
-
-  return this
-}
-
-lz.prototype.all = function () {
-  var results = []
-  var item
-  var n = this.length
-
-  while (n > 0) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    results.push(item)
-    n -= 1
-  }
-
-  this.list = this._value = results
-
-  // reset
-  this.fn = []
-  this.i = 0
-  this.length = this.list.length
-
-  return this
-}
-
-lz.prototype.zipWith = function (fn, list) {
-  return lz.zipWith(fn, list, this.list)
-}
-
-lz.prototype.cycle = function () {
-  return lz.cycle(this.list)
-}
-
-lz.prototype.$ = lz.prototype.toArray = function () {
-  if (this._value) {
-    return this._value
-  }
-
-  var results = []
-  var item
-  var n = this.length
-
-  while (n > 0) {
-    item = this.next()
-    if (item === UNDEFINED) break
-    results.push(item)
-    n -= 1
-  }
-
-  this._value = results
-
-  return results
-}
-
-lz.range = function (start, end) {
-  var i = new lz([])
-  i.length = end
-  i._next = i.next
-  i.next = function () {
-    this.list.push(this.i + start)
-    return i._next()
-  }
-  return i
-}
 
 lz.cycle = function (list) {
   var z = new lz(list)
@@ -300,6 +281,17 @@ lz.cycle = function (list) {
     return this._next()
   }
   return z
+}
+
+lz.range = function (start, end) {
+  var i = new lz([])
+  i.length = end
+  i._next = i.next
+  i.next = function () {
+    this.list.push(this.i + start)
+    return i._next()
+  }
+  return i
 }
 
 lz.zipWith = function (fn, list1, list2) {
