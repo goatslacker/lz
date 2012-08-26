@@ -361,6 +361,17 @@ lz.repeat = function (n) {
   return z
 }
 
+lz.replicate = function (times, n) {
+  var z = new lz([])
+  z.length = times
+  z._next = z.next
+  z.next = function () {
+    this.list.push(n)
+    return this._next()
+  }
+  return z
+}
+
 lz.zipWith = function (fn, list1, list2) {
   var z = new lz([])
   z.length = list1.length < list2.length ? list1.length : list2.length
