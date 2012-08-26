@@ -139,6 +139,18 @@ lz.prototype.next = function () {
   return item
 }
 
+lz.prototype.nil = function () {
+  if (this.length === 0) return true
+
+  while (true) {
+    item = this.next()
+    if (item != null) return false
+    if (item === UNDEFINED) break
+  }
+
+  return true
+}
+
 lz.prototype.prev = function () {
   var item = this.list[--this.i]
   if (this.i === -1) return UNDEFINED
