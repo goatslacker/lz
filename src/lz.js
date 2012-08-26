@@ -139,18 +139,6 @@ lz.prototype.next = function () {
   return item
 }
 
-lz.prototype.nil = function () {
-  if (this.length === 0) return true
-
-  while (true) {
-    item = this.next()
-    if (item != null) return false
-    if (item === UNDEFINED) break
-  }
-
-  return true
-}
-
 lz.prototype.prev = function () {
   var item = this.list[--this.i]
   if (this.i === -1) return UNDEFINED
@@ -248,13 +236,26 @@ lz.prototype.and = function () {
 }
 
 // @value
+lz.prototype.all = function (fn) {
+  var item
+
+  while (true) {
+    item = this.next()
+    if (fn(item) === false) return false
+    if (item === UNDEFINED) break
+  }
+
+  return true
+}
+
+// @value
 lz.prototype.any = function (fn) {
   var item
 
   while (true) {
     item = this.next()
     if (fn(item) === true) return true
-    if (item === UNDEFINED) return false
+    if (item === UNDEFINED) break
   }
 
   return false
@@ -295,6 +296,19 @@ lz.prototype.last = function () {
   var item
   this.i = this.length
   return (item = this.prev()) === UNDEFINED ? null : item
+}
+
+// @value
+lz.prototype.nil = function () {
+  if (this.length === 0) return true
+
+  while (true) {
+    item = this.next()
+    if (item != null) return false
+    if (item === UNDEFINED) break
+  }
+
+  return true
 }
 
 // @value
