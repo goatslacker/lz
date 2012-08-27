@@ -228,8 +228,9 @@ lz.prototype.zipWith = function (fn, list) {
 // @value
 lz.prototype.and = function () {
   var item
+  var i = this.length
 
-  while (true) {
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (item === false) return false
@@ -241,8 +242,9 @@ lz.prototype.and = function () {
 // @value
 lz.prototype.all = function (fn) {
   var item
+  var i = this.length
 
-  while (true) {
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (fn(item) === false) return false
@@ -254,8 +256,9 @@ lz.prototype.all = function (fn) {
 // @value
 lz.prototype.any = function (fn) {
   var item
+  var i = this.length
 
-  while (true) {
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (fn(item) === true) return true
@@ -267,9 +270,12 @@ lz.prototype.any = function (fn) {
 // @value
 lz.prototype.foldl = function (fn) {
   var result, next
+  var i = this.length
+
   result = this.next()
   if (result === UNDEFINED) return null
-  while (true) {
+
+  while (i-- > 0) {
     next = this.next()
     if (next === UNDEFINED) break
     result = fn(result, next)
@@ -280,11 +286,14 @@ lz.prototype.foldl = function (fn) {
 // @value
 lz.prototype.elem = function (n) {
   var item
-  while (true) {
+  var i = this.length
+
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (item === n) return true
   }
+
   return false
 }
 
@@ -304,8 +313,9 @@ lz.prototype.last = function () {
 lz.prototype.nil = function () {
   var item
   if (this.length === 0) return true
+  var i = this.length
 
-  while (true) {
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (item != null) return false
@@ -317,7 +327,9 @@ lz.prototype.nil = function () {
 // @value
 lz.prototype.notElem = function (n) {
   var item
-  while (true) {
+  var i = this.length
+
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (item === n) return false
@@ -328,8 +340,9 @@ lz.prototype.notElem = function (n) {
 // @value
 lz.prototype.or = function () {
   var item
+  var i = this.length
 
-  while (true) {
+  while (i-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     if (item === true) return true
