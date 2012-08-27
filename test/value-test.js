@@ -25,6 +25,11 @@ exports.elem = function (lz, assert) {
   assert.equal(arr.lz().elem(6), false)
 }
 
+exports.notElem = function (lz, assert) {
+  assert.equal(arr.lz().notElem(5), false)
+  assert.equal(arr.lz().notElem(6), true)
+}
+
 exports['tail and more'] = function (lz, assert) {
   assert.equal(
     arr

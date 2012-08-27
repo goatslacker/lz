@@ -319,6 +319,17 @@ lz.prototype.nil = function () {
 }
 
 // @value
+lz.prototype.notElem = function (n) {
+  var item
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    if (item === n) return false
+  }
+  return true
+}
+
+// @value
 lz.prototype.or = function () {
   var item
 
