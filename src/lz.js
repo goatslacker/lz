@@ -344,6 +344,40 @@ lz.prototype.or = function () {
   return false
 }
 
+// @value
+lz.prototype.unlines = function () {
+  var result = ''
+  var item, next
+
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    result += item
+    next = this.next()
+    if (next === UNDEFINED) break
+    result += '\n' + next
+  }
+
+  return result
+}
+
+// @value
+lz.prototype.unwords = function () {
+  var result = ''
+  var item, next
+
+  while (true) {
+    item = this.next()
+    if (item === UNDEFINED) break
+    result += item
+    next = this.next()
+    if (next === UNDEFINED) break
+    result += ' ' + next
+  }
+
+  return result
+}
+
 
 lz.cycle = function (list) {
   var z = new lz(list)
@@ -372,6 +406,10 @@ lz.iterate = function (fn, n) {
   return z
 }
 
+lz.lines = function (str) {
+  return new lz(str.split('\n'))
+}
+
 lz.range = function (start, end) {
   var z = new lz([])
   z.length = end
@@ -395,6 +433,10 @@ lz.replicate = function (times, n) {
   z.length = times
   z.pre = function (i) { this.list[i] = n }
   return z
+}
+
+lz.words = function (str) {
+  return new lz(str.split(' '))
 }
 
 lz.zipWith = function (fn, list1, list2) {
