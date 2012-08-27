@@ -15,12 +15,12 @@ exports.cycle = function (lz, assert) {
   )
 }
 
-//exports.chained = function (lz, assert) {
-//  assert.equal(
-//    [1, 2, 3].lz().cycle().take(3).last(),
-//    3
-//  )
-//}
+exports.chained = function (lz, assert) {
+  assert.equal(
+    [1, 2, 3].lz().cycle().take(3).last(),
+    3
+  )
+}
 
 exports.fizzbuzz = function (lz, assert) {
   var three = lz.cycle(['', '', 'fizz'])
