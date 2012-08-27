@@ -307,8 +307,8 @@ lz.prototype.last = function () {
   return (item = this.prev()) === UNDEFINED ? null : item
 }
 
-// @value
 lz.prototype.nil = function () {
+  var item
   if (this.length === 0) return true
 
   while (true) {
@@ -423,6 +423,44 @@ lz.iterate = function (fn, n) {
 
 lz.lines = function (str) {
   return new lz(str.split('\n'))
+}
+
+lz.max = function (arr, fn) {
+  if (!arr) return null
+  var item, value = -Infinity, index = -1, length = arr.length
+
+  if (fn) {
+    while (++index < length) {
+      item = fn(arr[index])
+      if (item > value) value = item
+    }
+  } else {
+    while (++index < length) {
+      item = arr[index]
+      if (item > value) value = item
+    }
+  }
+
+  return value
+}
+
+lz.min = function (arr, fn) {
+  if (!arr) return null
+  var item, value = Infinity, index = -1, length = arr.length
+
+  if (fn) {
+    while (++index < length) {
+      item = fn(arr[index])
+      if (item < value) value = item
+    }
+  } else {
+    while (++index < length) {
+      item = arr[index]
+      if (item < value) value = item
+    }
+  }
+
+  return value
 }
 
 lz.range = function (start, end) {
