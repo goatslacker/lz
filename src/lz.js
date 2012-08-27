@@ -235,8 +235,8 @@ lz.prototype.and = function () {
 
   while (true) {
     item = this.next()
-    if (item === false) return false
     if (item === UNDEFINED) break
+    if (item === false) return false
   }
 
   return true
@@ -248,8 +248,8 @@ lz.prototype.all = function (fn) {
 
   while (true) {
     item = this.next()
-    if (fn(item) === false) return false
     if (item === UNDEFINED) break
+    if (fn(item) === false) return false
   }
 
   return true
@@ -261,8 +261,8 @@ lz.prototype.any = function (fn) {
 
   while (true) {
     item = this.next()
-    if (fn(item) === true) return true
     if (item === UNDEFINED) break
+    if (fn(item) === true) return true
   }
 
   return false
@@ -324,8 +324,8 @@ lz.prototype.or = function () {
 
   while (true) {
     item = this.next()
-    if (item === true) return true
     if (item === UNDEFINED) break
+    if (item === true) return true
   }
 
   return false

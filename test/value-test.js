@@ -113,6 +113,22 @@ exports.any = function (lz, assert) {
   )
 }
 
+exports.all = function (lz, assert) {
+  assert.equal(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .lz()
+    .all(function (n) { return n === 5 }),
+    false
+  )
+
+  assert.equal(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .lz()
+    .all(function (n) { return n < 10 }),
+    true
+  )
+}
+
 exports.or = function (lz, assert) {
   assert.equal(
     [false, false, false, false]
