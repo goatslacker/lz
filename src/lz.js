@@ -393,6 +393,21 @@ lz.cycle = function (list) {
   return z
 }
 
+lz.flatten = function (arr, shallow) {
+  var result = []
+  if (!arr) return result
+  var value, index = -1, length = arr.length
+
+  while (++index < length) {
+    value = arr[index]
+    if (Array.isArray(value))
+      result.push.apply(result, shallow ? value : lz.flatten(value))
+    else result.push(value)
+  }
+
+  return result
+}
+
 lz.iterate = function (fn, n) {
   var z = new lz([])
   var result
