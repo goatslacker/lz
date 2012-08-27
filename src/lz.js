@@ -1,4 +1,4 @@
-/*jshint asi: true */
+/*jshint asi: true, eqnull: true */
 var UNDEFINED = {}
 var FALSE = {}
 
@@ -15,10 +15,7 @@ function lz(list) {
 }
 
 Object.defineProperty(Array.prototype, 'lz', {
-  value: function () {
-    return new lz(this)
-  },
-  enumerable: false
+  value: function () { return new lz(this) }
 })
 
 lz.prototype.$ = lz.prototype.toArray = function () {
