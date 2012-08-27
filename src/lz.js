@@ -311,8 +311,8 @@ lz.prototype.nil = function () {
 
   while (true) {
     item = this.next()
-    if (item != null) return false
     if (item === UNDEFINED) break
+    if (item != null) return false
   }
 
   return true

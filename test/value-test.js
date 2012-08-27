@@ -128,3 +128,26 @@ exports.or = function (lz, assert) {
     true
   )
 }
+
+exports.nil = function (lz, assert, _) {
+  assert.equal(
+    [null, null, null]
+    .lz()
+    .nil(),
+    true
+  )
+
+  assert.equal(
+    [null, undefined, undefined]
+    .lz()
+    .nil(),
+    true
+  )
+
+  assert.equal(
+    [null, null, false]
+    .lz()
+    .nil(),
+    false
+  )
+}
