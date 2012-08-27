@@ -267,7 +267,7 @@ lz.prototype.any = function (fn) {
   return false
 }
 
-// @value
+// @value XXX
 lz.prototype.foldl = function (fn) {
   var result, next
   var i = this.length
@@ -324,6 +324,14 @@ lz.prototype.nil = function () {
   return true
 }
 
+lz.prototype.max = function () {
+  return lz.max(this.$())
+}
+
+lz.prototype.min = function () {
+  return lz.min(this.$())
+}
+
 // @value
 lz.prototype.notElem = function (n) {
   var item
@@ -351,7 +359,7 @@ lz.prototype.or = function () {
   return false
 }
 
-// @value
+// @value XXX
 lz.prototype.unlines = function () {
   var result = ''
   var item, next
@@ -368,7 +376,7 @@ lz.prototype.unlines = function () {
   return result
 }
 
-// @value
+// @value XXX
 lz.prototype.unwords = function () {
   var result = ''
   var item, next
