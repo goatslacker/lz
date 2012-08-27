@@ -50,13 +50,12 @@ lz.prototype.drop = function (n) {
   this._value = null
   var item
 
-  while (n > 0) {
+  while (n-- > 0) {
     item = this.next()
     if (item === UNDEFINED) {
       this._value = []
       return this
     }
-    n -= 1
   }
 
   this.list = this.list.slice(this.i)
@@ -104,14 +103,11 @@ lz.prototype.init = function () {
   var item
   var n = this.length
 
-  while (n > 0) {
+  while (--n > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     results.push(item)
-    n -= 1
   }
-
-  results.pop()
 
   this.list = this._value = results
 
@@ -163,14 +159,13 @@ lz.prototype.tail = function () {
   var item
   var n = this.length
 
-  while (n > 0) {
+  this.next()
+
+  while (--n > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     results.push(item)
-    n -= 1
   }
-
-  results.shift()
 
   this.list = this._value = results
 
@@ -186,11 +181,10 @@ lz.prototype.take = function (n) {
   var results = []
   var item
 
-  while (n > 0) {
+  while (n-- > 0) {
     item = this.next()
     if (item === UNDEFINED) break
     results.push(item)
-    n -= 1
   }
 
   this.list = this._value = results
