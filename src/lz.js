@@ -130,6 +130,7 @@ lz.prototype.map = function (f) {
 }
 
 lz.prototype.next = function () {
+  if (this.pre) this.pre(this.i)
   var item = this.list[this.i++]
   if (this.i > this.length) return UNDEFINED
   for (var j = 0; j < this.fn.length; j += 1) {
@@ -140,6 +141,7 @@ lz.prototype.next = function () {
 }
 
 lz.prototype.prev = function () {
+  if (this.pre) this.pre(this.i - 1)
   var item = this.list[--this.i]
   if (this.i === -1) return UNDEFINED
   for (var j = 0; j < this.fn.length; j += 1) {
@@ -371,14 +373,10 @@ lz.iterate = function (fn, n) {
 }
 
 lz.range = function (start, end) {
-  var i = new lz([])
-  i.length = end
-  i._next = i.next
-  i.next = function () {
-    this.list.push(this.i + start)
-    return i._next()
-  }
-  return i
+  var z = new lz([])
+  z.length = end
+  z.pre = function (i) { this.list[i] = i + start }
+  return z
 }
 
 lz.repeat = function (n) {
@@ -395,11 +393,7 @@ lz.repeat = function (n) {
 lz.replicate = function (times, n) {
   var z = new lz([])
   z.length = times
-  z._next = z.next
-  z.next = function () {
-    this.list.push(n)
-    return this._next()
-  }
+  z.pre = function (i) { this.list[i] = n }
   return z
 }
 

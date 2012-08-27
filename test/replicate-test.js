@@ -12,7 +12,7 @@ exports.chained = function (lz, assert) {
     lz
     .replicate(2, 3)
     .map(function (n) { return n * 3 })
-    .head(),
+    .last(),
     9
   )
 }

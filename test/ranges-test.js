@@ -23,3 +23,11 @@ exports.step = function (lz, assert) {
     [1, 3, 5, 7, 9]
   )
 }
+
+exports['last range'] = function (lz, assert) {
+  assert.equal(
+    lz.range(1, 10)
+    .last(),
+    10
+  )
+}
