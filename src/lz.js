@@ -40,6 +40,15 @@ lz.prototype.$ = lz.prototype.toArray = function () {
   return results
 }
 
+lz.prototype.compact = function () {
+  this._value = null
+  this.fn.push(function (x) {
+    if (!x) return FALSE
+    return x
+  })
+  return this
+}
+
 lz.prototype.cycle = function () {
   return lz.cycle(this.list)
 }
