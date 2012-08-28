@@ -1,17 +1,18 @@
-/*jshint asi: true, eqnull: true */
+'use strict';
+
 var UNDEFINED = {}
 var FALSE = {}
 
 function lz(list) {
+  if (!(this instanceof lz)) {
+    return new lz(list)
+  }
+
   this.fn = []
   this.i = 0
   this.length = list.length
 
   this.list = list
-
-  if (!(this instanceof lz)) {
-    return new lz(list)
-  }
 }
 
 Object.defineProperty(Array.prototype, 'lz', {
@@ -264,7 +265,7 @@ lz.prototype.any = function (fn) {
   return false
 }
 
-// @value XXX
+// @value
 lz.prototype.foldl = function (fn) {
   var result, next
   var i = this.length
@@ -418,6 +419,30 @@ lz.flatten = function (arr, shallow) {
   }
 
   return result
+}
+
+lz.foldl = function (fn, arr) {
+  if (!arr) return null
+  var item, value = arr[0], index = 0, length = arr.length
+
+  if (arr instanceof lz) {
+    index = arr.length
+
+    value = arr.next()
+    if (value === UNDEFINED) return null
+
+    while (index-- > 0) {
+      item = arr.next()
+      if (item === UNDEFINED) break
+      value = fn(value, item)
+    }
+  } else {
+    while (++index < length) {
+      value = fn(value, arr[index])
+    }
+  }
+
+  return value
 }
 
 lz.iterate = function (fn, n) {

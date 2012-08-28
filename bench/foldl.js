@@ -19,6 +19,10 @@ function _lodash_chained() {
 }
 
 function _lz() {
+  return lz.foldl(sum, a)
+}
+
+function _lz_chained() {
   return new lz(a).foldl(sum)
 }
 
@@ -33,5 +37,6 @@ require('./')({
   'lodash': _lodash,
   'lodash chained': _lodash_chained,
   'lz': _lz,
+  'lz chained': _lz_chained,
   'wu': _wu
 })
