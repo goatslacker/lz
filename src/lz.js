@@ -49,6 +49,26 @@ lz.prototype.compact = function () {
   return this
 }
 
+lz.prototype.concat = function (arr) {
+  if (arr instanceof lz) {
+    var length = this.length
+    this.length += arr.length
+
+    this.fn.push(function (x) {
+      if (this.i > length) {
+        x = arr.next()
+        this.list.push(x)
+      }
+      return x
+    }.bind(this))
+  } else {
+    this.list.push.apply(this.list, arr)
+    this.length = this.list.length
+  }
+
+  return this
+}
+
 lz.prototype.cycle = function () {
   return lz.cycle(this.list)
 }
