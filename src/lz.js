@@ -294,6 +294,10 @@ lz.prototype.any = function (fn) {
   return false
 }
 
+lz.prototype.flatten = function () {
+  return lz.flatten(this.$())
+}
+
 // @value
 lz.prototype.foldl = function (fn) {
   var result, next

@@ -17,5 +17,5 @@ exports['concat with cycle'] = function (lz, assert) {
     .take(9)
     .$(),
     [1, 2, 3, 4, 5, 4, 5, 4, 5]
-  );
+  )
 }
