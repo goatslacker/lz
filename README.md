@@ -8,23 +8,31 @@ useful functions for working with lists and text as efficiently as possible
 
 
 ### Fizzbuzz
-    var three = lz.cycle(['', '', 'fizz'])
-    var five = lz.cycle(['', '', '', '', 'buzz'])
-    var fizzbuzz = lz.zipWith(function (a, b) { return a + b }, three, five)
+```javascript
+var three = lz.cycle(['', '', 'fizz'])
+var five = lz.cycle(['', '', '', '', 'buzz'])
+var fizzbuzz = lz.zipWith(function (a, b) { return a + b }, three, five)
 
-    fizzbuzz.take(5).toArray()
+fizzbuzz.take(5).toArray()
+```
 
 
 ### Factorial
-    // Return factorial of 4
-    lz([1, 2, 3, 4]).scanl(function (a, b) { return a * b }).at(5)
+```javascript
+  // Return factorial of 4
+  lz([1, 2, 3, 4]).scanl(function (a, b) { return a * b }).at(5)
+```
 
 
 ### ProjectEuler Problem 1
 
-    lz.range(1, 999)
-    .filter(function (n) { return n % 3 === 0 || n % 5 === 0 })
-    .foldl(function (a, b) { return a + b })
+```javascript
+  lz.range(1, 999)
+  .filter(function (n) { return n % 3 === 0 || n % 5 === 0 })
+  .foldl(function (a, b) { return a + b })
+```
+
+
 
 ## `API`
 
@@ -35,12 +43,17 @@ useful functions for working with lists and text as efficiently as possible
 
 Forceful method which returns an Array. Alias is `$`
 
-    [1, 2, 3].take(2).toArray()
-    // = [1, 2]
+```javascript
+[1, 2, 3].take(2).toArray()
+// = [1, 2]
+```
+
 
 ### `compact()`
 
 Lazily removes falsy `(undefined, null, "", 0, NaN)` values from the list
 
-    [true, false, true, false].compact().take(2).toArray()
-    // = [true, true]
+```javascript
+[true, false, true, false].compact().take(2).toArray()
+// = [true, true]
+```
