@@ -181,6 +181,8 @@ lz.prototype.scanl = function (fn) {
   return this
 }
 
+lz.prototype.sort = Array.prototype.sort
+
 lz.prototype.tail = function () {
   var results = []
   var item
