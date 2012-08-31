@@ -36,12 +36,13 @@ fizzbuzz.take(5).toArray()
 
 ## `API`
 
-* [$/toArray](#toarray)
+* [$ | toArray](#toarray)
 * [compact](#compact)
+* [concat](#concat)
 
 ### `toArray()`
 
-Forceful method which returns an Array. Alias is `$`
+Forceful method which returns an Array. Alias is `$()`.
 
 ```javascript
 [1, 2, 3].take(2).toArray()
@@ -51,9 +52,19 @@ Forceful method which returns an Array. Alias is `$`
 
 ### `compact()`
 
-Lazily removes falsy `(undefined, null, "", 0, NaN)` values from the list
+Lazily removes falsy `(undefined, null, "", 0, NaN)` values from the list.
 
 ```javascript
 [true, false, true, false].compact().take(2).toArray()
 // = [true, true]
+```
+
+
+### `concat(arr || instanceof lz)`
+
+Lazily concatenate the list passed in to the current list.
+
+```javascript
+['hello'].lz().concat(['laziness']).take(2).toArray()
+// = ['hello', 'laziness']
 ```
