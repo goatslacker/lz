@@ -1,9 +1,9 @@
 `lz`
 ==
 
-the fastest functional list/text lazy module in JavaScript
+the fastest functional lazy library for JavaScript
 
-this isn't a function programming do it all library -- this is a collection of
+this isn't an FP do it all library -- this is a collection of
 useful functions for working with lists and text as efficiently as possible
 
 
@@ -12,7 +12,7 @@ useful functions for working with lists and text as efficiently as possible
     var five = lz.cycle(['', '', '', '', 'buzz'])
     var fizzbuzz = lz.zipWith(function (a, b) { return a + b }, three, five)
 
-    fizzbuzz.take(5).$(),
+    fizzbuzz.take(5).toArray()
 
 
 ### Factorial
