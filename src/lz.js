@@ -296,6 +296,15 @@ lz.prototype.any = function (fn) {
   return false
 }
 
+lz.prototype.at = function (n) {
+  while (--n > 1) {
+    if (this.next() === UNDEFINED) return null
+  }
+
+  var item
+  return (item = this.next()) === UNDEFINED ? null : item
+}
+
 lz.prototype.flatten = function () {
   return lz.flatten(this.$())
 }
