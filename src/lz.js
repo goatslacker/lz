@@ -53,10 +53,10 @@
   }
 
   lz_prototype.concat = function (arr) {
-    if (arr instanceof lz) {
-      var length = this.length
-      this.length += arr.length
+    var length = this.length
+    this.length += arr.length
 
+    if (arr instanceof lz) {
       this._fn.push(function (x) {
         if (this._i > length) {
           x = arr.next()
@@ -65,8 +65,13 @@
         return x
       }.bind(this))
     } else {
-      this._list.push.apply(this._list, arr)
-      this.length = this._list.length
+      this._fn.push(function (x) {
+        if (this._i > length) {
+          x = arr[this._i - length - 1]
+          this._list.push(x)
+        }
+        return x
+      }.bind(this))
     }
 
     return this
