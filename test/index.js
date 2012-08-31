@@ -24,6 +24,7 @@ var Suites = {
     var _ = this
     var color = 'green'
     var i = 0
+    var f = 0
     suites.forEach(function (file) {
       var tests
       if (!(_.rx.test(file))) {
@@ -40,12 +41,13 @@ var Suites = {
           color = 'red'
           console.error('\t', _.red(test), 'ø')
           console.error(e)
+          f += 1
           return
         }
         console.log('\t', _.green(test), '√')
       })
     })
-    console.log(_[color]('\nDone!'), i, 'Tests')
+    console.log(_[color]('\nDone!'), i, 'Tests', f && f + ' Failed')
     console.log('Time ' + (Date.now() - start) + 'ms')
   }
 }
