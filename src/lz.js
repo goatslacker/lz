@@ -584,4 +584,24 @@ lz.zipWith = function (fn, list1, list2) {
   }
 }
 
+// extras
+lz.fp = {}
+lz.fp.flip = function (a, b) { return b }
+lz.fp.identity = function (a) { return a }
+lz.fp.not = function (b) { return !b }
+lz.fp.curry = function (fn) {
+  if (fn.length < 1) {
+    return fn
+  }
+  return function (arg) {
+    if (arg == null) arg = []
+
+    return function (a) {
+      xargs = arg.concat(a)
+      if (xargs.length < fn.length) return curry(fn)
+      else fn.apply(fn, xargs)
+    }
+  }
+}
+
 module.exports = lz
