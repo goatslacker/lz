@@ -25,3 +25,22 @@ useful functions for working with lists and text as efficiently as possible
     lz.range(1, 999)
     .filter(function (n) { return n % 3 === 0 || n % 5 === 0 })
     .foldl(function (a, b) { return a + b })
+
+## `API`
+
+* $/toArray
+* compact
+
+### `toArray()`
+
+Forceful method which returns an Array. Alias is `$`
+
+    [1, 2, 3].take(2).toArray()
+    // = [1, 2]
+
+### `compact()`
+
+Lazily removes falsy `(undefined, null, "", 0, NaN)` values from the list
+
+    [true, false, true, false].compact().take(2).toArray()
+    // = [true, true]
