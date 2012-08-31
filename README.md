@@ -28,8 +28,8 @@ useful functions for working with lists and text as efficiently as possible
 
 ## `API`
 
-* $/toArray
-* compact
+* [$/toArray](#toarray)
+* [compact](#compact)
 
 ### `toArray()`
 
