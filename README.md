@@ -68,6 +68,6 @@ Lazily concatenate the list passed in to the current list.
 ['hello'].lz().concat(['laziness']).take(2).toArray()
 // = ['hello', 'laziness']
 
-lz([1]).concat(lz.cycle(2)).take(4).toArray()
+lz([1]).concat(lz.cycle([2])).take(4).toArray()
 /// = [1, 2, 2, 2]
 ```
