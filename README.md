@@ -43,6 +43,8 @@ fizzbuzz.take(5).toArray()
 * [drop](#drop)
 * [dropWhile](#dropWhile)
 * [filter](#filter)
+* [init](#init)
+* [map](#map)
 
 ### `toArray()`
 
@@ -119,4 +121,25 @@ function provided is not true.
 .filter(function (x) { return x.color === 'red' })
 .toArray()
 // = [{ color: 'red' }, { color: 'red' }]
+```
+
+
+### `init()`
+
+Returns all the elements from the collection except for the last one.
+
+```javascript
+[1, 2, 3, 4, 5].init().toArray()
+// = [1, 2, 3, 4]
+```
+
+
+### `map(Function)`
+
+Lazily applies the function provided to each element and replaces the element
+with the value returned from the function.
+
+```javascript
+['m', 'a', 'p'].map(function (a) { return a.toUpperCase() }).toArray().join('')
+// = 'MAP'
 ```
