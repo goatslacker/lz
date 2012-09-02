@@ -43,6 +43,27 @@
     return results
   }
 
+  lz_prototype.toString = function () {
+    if (this._value) {
+      return this._value.join('')
+    }
+
+    var results = ''
+    var item
+    var n = this.length
+
+    while (n > 0) {
+      item = this.next()
+      if (item === UNDEFINED) break
+      results += item
+      n -= 1
+    }
+
+    this._value = results
+
+    return results
+  }
+
   lz_prototype.compact = function () {
     this._value = null
     this._fn.push(function (x) {

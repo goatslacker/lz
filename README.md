@@ -37,14 +37,21 @@ fizzbuzz.take(5).toArray()
 ## `API`
 
 * [$ | toArray](#toarray)
+* [toString](#tostring)
 * [compact](#compact)
-* [concat](#concat)
+* [concat](#concatarray--object-lz)
 * [cycle](#cycle)
-* [drop](#drop)
-* [dropWhile](#dropWhile)
-* [filter](#filter)
+* [drop](#dropnumber)
+* [dropWhile](#dropWhilefunction)
+* [filter](#filterfunction)
 * [init](#init)
-* [map](#map)
+* [map](#mapfunction)
+* [scanl](#scanlfunction)
+* [sort](#sort)
+* [tail](#tail)
+* [take](#takenumber)
+* [takeWhile](#takeWhilefunction)
+
 
 ### `toArray()`
 
@@ -56,12 +63,26 @@ Forceful method which returns an Array. Alias is `$()`.
 ```
 
 
+### `toString()`
+
+Forceful method which returns the result as a String.
+
+```javascript
+lz('Bananas').toString()
+// = Bananas
+```
+
+
 ### `compact()`
 
 Lazily removes falsy `(undefined, null, "", 0, NaN)` values from the list.
 
 ```javascript
-[true, false, true, false].lz().compact().take(2).toArray()
+[true, false, true, false]
+  .lz()
+  .compact()
+  .take(2)
+  .toArray()
 // = [true, true]
 ```
 
@@ -71,10 +92,18 @@ Lazily removes falsy `(undefined, null, "", 0, NaN)` values from the list.
 Lazily concatenate the list passed in to the current list.
 
 ```javascript
-['hello'].lz().concat(['laziness']).take(2).toArray()
+['hello']
+  .lz()
+  .concat(['laziness'])
+  .take(2)
+  .toArray()
 // = ['hello', 'laziness']
 
-[1].lz().concat(lz.cycle([2])).take(4).toArray()
+[1]
+  .lz()
+  .concat(lz.cycle([2]))
+  .take(4)
+  .toArray()
 /// = [1, 2, 2, 2]
 ```
 
@@ -84,7 +113,12 @@ Lazily concatenate the list passed in to the current list.
 Generates an infinite loop composed of the elements of the current list.
 
 ```javascript
-['Na'].lz().cycle().take(10).toArray().join(' ') + ' Batman!'
+['Na']
+  .lz()
+  .cycle()
+  .take(10)
+  .toArray()
+  .join(' ') + ' Batman!'
 // = Na Na Na Na Na Na Na Na Na Na Batman!
 ```
 
@@ -105,7 +139,10 @@ the collection.
 Drops elements from the collection until the function provided returns false.
 
 ```javascript
-[1, 2, 3, 4, 5].lz().dropWhile(function (n) { return n < 4 }).toArray()
+[1, 2, 3, 4, 5]
+  .lz()
+  .dropWhile(function (n) { return n < 4 })
+  .toArray()
 // = [4, 5]
 ```
 
@@ -117,9 +154,9 @@ function provided is not true.
 
 ```javascript
 [{ color: 'red' }, { color: 'blue' }, { color: 'pink' }, { color: 'red' }]
-.lz()
-.filter(function (x) { return x.color === 'red' })
-.toArray()
+  .lz()
+  .filter(function (x) { return x.color === 'red' })
+  .toArray()
 // = [{ color: 'red' }, { color: 'red' }]
 ```
 
@@ -129,7 +166,7 @@ function provided is not true.
 Returns all the elements from the collection except for the last one.
 
 ```javascript
-[1, 2, 3, 4, 5].init().toArray()
+[1, 2, 3, 4, 5].lz().init().toArray()
 // = [1, 2, 3, 4]
 ```
 
@@ -140,6 +177,62 @@ Lazily applies the function provided to each element and replaces the element
 with the value returned from the function.
 
 ```javascript
-['m', 'a', 'p'].map(function (a) { return a.toUpperCase() }).toArray().join('')
+['m', 'a', 'p']
+  .lz()
+  .map(function (a) { return a.toUpperCase() })
+  .toArray()
+  .join('')
 // = 'MAP'
+```
+
+
+### `scanl(Function)`
+
+Similar to a map and a fold. Lazily returns a list of successive reduced values from the left.
+
+```javascript
+[1, 2, 3]
+  .lz()
+  .scanl(function (a, b) { return a + b })
+  .toArray()
+// = [1, 3, 6]
+```
+
+
+### `sort(Function)`
+
+Array prototype method.
+
+
+## `tail`
+
+Extract the elements after the head of a list.
+
+```javascript
+[1, 2, 3, 4, 5].lz().last().toArray()
+// = [2, 3, 4, 5]
+```
+
+
+### `take(Number)`
+
+Replaces the collection with the amount taken from the current collection.
+
+```javascript
+lz('my name is lz').take(2).toString()
+// = 'my'
+```
+
+
+### `takeWhile(Function)`
+
+Replaces the collection with the values taken from the current collection
+which when applied to the callback function return true.
+
+```javascript
+[1, 2, 3, 4, 5]
+  .lz()
+  .takeWhile(function (n) { return n < 4 })
+  .toArray()
+// = [1, 2, 3]
 ```
