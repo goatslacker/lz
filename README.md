@@ -36,21 +36,28 @@ fizzbuzz.take(5).toArray()
 
 ## `API`
 
-* [$ | toArray](#toarray)
-* [toString](#tostring)
-* [compact](#compact)
-* [concat](#concatarray--object-lz)
-* [cycle](#cycle)
-* [drop](#dropnumber)
-* [dropWhile](#dropwhilefunction)
-* [filter](#filterfunction)
-* [init](#init)
-* [map](#mapfunction)
-* [scanl](#scanlfunction)
-* [sort](#sort)
-* [tail](#tail)
-* [take](#takenumber)
-* [takeWhile](#takewhilefunction)
+- chainable
+
+    * [$ | toArray](#toarray)
+    * [toString](#tostring)
+    * [compact](#compact)
+    * [concat](#concatarray--object-lz)
+    * [cycle](#cycle)
+    * [drop](#dropnumber)
+    * [dropWhile](#dropwhilefunction)
+    * [filter](#filterfunction)
+    * [init](#init)
+    * [map](#mapfunction)
+    * [scanl](#scanlfunction)
+    * [sort](#sort)
+    * [tail](#tail)
+    * [take](#takenumber)
+    * [takeWhile](#takewhilefunction)
+    * [zipWith](#zipwithfunction-array)
+
+- value
+
+    * [and](#andfunction)
 
 
 ### `toArray()`
@@ -235,4 +242,31 @@ which when applied to the callback function return true.
   .takeWhile(function (n) { return n < 4 })
   .toArray()
 // = [1, 2, 3]
+```
+
+
+### `zipWith(Function, Array)`
+
+Takes the current list and the list passed in and applies the function to
+each element in both lists generating a new list from the result.
+
+```javascript
+[1, 2]
+  .lz()
+  .zipWith(function (a, b) { return a + b }, [2, 1])
+  .toArray()
+// = [3, 3]
+```
+
+
+### `and()`
+
+Returns false if any element in the list is falsy, otherwise returns true.
+
+```javascript
+[null].lz().and()
+// = false
+
+lz('i am true to you').and()
+// = true
 ```

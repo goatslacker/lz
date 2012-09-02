@@ -291,7 +291,7 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item === false) return false
+      if (!item) return false
     }
 
     return true
