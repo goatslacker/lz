@@ -42,7 +42,7 @@ fizzbuzz.take(5).toArray()
 * [concat](#concatarray--object-lz)
 * [cycle](#cycle)
 * [drop](#dropnumber)
-* [dropWhile](#dropWhilefunction)
+* [dropWhile](#dropwhilefunction)
 * [filter](#filterfunction)
 * [init](#init)
 * [map](#mapfunction)
@@ -50,7 +50,7 @@ fizzbuzz.take(5).toArray()
 * [sort](#sort)
 * [tail](#tail)
 * [take](#takenumber)
-* [takeWhile](#takeWhilefunction)
+* [takeWhile](#takewhilefunction)
 
 
 ### `toArray()`
@@ -204,7 +204,7 @@ Similar to a map and a fold. Lazily returns a list of successive reduced values 
 Array prototype method.
 
 
-## `tail`
+### `tail()`
 
 Extract the elements after the head of a list.
 
