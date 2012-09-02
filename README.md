@@ -60,6 +60,11 @@ fizzbuzz.take(5).toArray()
     * [and](#andfunction)
 
 
+### `chainable`
+
+The following functions return this (Object lz)
+
+
 ### `toArray()`
 
 Forceful method which returns an Array. Alias is `$()`.
@@ -259,6 +264,11 @@ each element in both lists generating a new list from the result.
 ```
 
 
+### `value`
+
+These functions return a value.
+
+
 ### `and()`
 
 Returns false if any element in the list is falsy, otherwise returns true.
@@ -270,3 +280,8 @@ Returns false if any element in the list is falsy, otherwise returns true.
 lz('i am true to you').and()
 // = true
 ```
+
+
+## `License`
+
+[MIT](http://josh.mit-license.org/)
