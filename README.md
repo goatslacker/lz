@@ -33,6 +33,21 @@ fizzbuzz.take(5).toArray()
 ```
 
 
+### 99 Haskell Problems. Problem 14
+
+```javascript
+  // Duplicate elements of a list
+
+  var duplicate = function (list) {
+    // note you should use `new` but you don't have to
+    // you could also do list.lz() to create a new instance
+    return new lz(list)
+      .concatMap(function (x) { return [x, x] })
+  }
+  duplicate([1, 2, 3])
+  // = [1, 1, 2, 2, 3, 3]
+```
+
 
 ## `API`
 
@@ -57,7 +72,10 @@ fizzbuzz.take(5).toArray()
 
 - value
 
-    * [and](#andfunction)
+    * [and](#and)
+    * [all](#allfunction)
+    * [any](#anyfunction)
+    * [at](#atnumber)
 
 
 ### `chainable`
@@ -279,6 +297,47 @@ Returns false if any element in the list is falsy, otherwise returns true.
 
 lz('i am true to you').and()
 // = true
+```
+
+
+### `all(Function)`
+
+Applies the function to each element in the collection,
+returns false if the return value from the function for any of the elements
+is false, otherwise returns true.
+
+```javascript
+[2, 4, 6, 8, 10]
+  .lz()
+  .all(function (n) { return n % 2 === 0 })
+// = true
+```
+
+
+### `any(Function)`
+
+Applies the function to each element in the collection,
+returns true if the return value from the function for any of the elements
+is true, otherwise returns false.
+
+```javascript
+[10, 9, 8, 7, 6]
+  .lz()
+  .any(function (n) { return n === 9 })
+// = true
+```
+
+
+### `at(Number)`
+
+Returns the element at the index provided. It's zero-based.
+
+```javascript
+lz('chocolate').at(3)
+// = 'c'
+
+lz([1, 2, 3]).at(0)
+// = 1
 ```
 
 
