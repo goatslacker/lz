@@ -1,10 +1,14 @@
 `lz`
 ==
 
-the fastest functional lazy library for JavaScript
+the fastest[¹](#speed) functional lazy library for JavaScript.
 
-this isn't an FP do it all library -- this is a collection of
-useful functions for working with lists and text as efficiently as possible
+this isn't an FP do-it-all library[²](https://github.com/clux/interlude) --
+this is a collection of useful functions for working with lists and text
+as efficiently as possible.
+
+
+## `Examples`
 
 
 ### Fizzbuzz
@@ -340,6 +344,20 @@ lz('Bananas').toString()
 // = Bananas
 ```
 
+
+## `Speed`
+
+It's fast-as-fuck™.
+
+I have included benchmarks in the repo so you can run them for yourself.
+
+If you're working with small lists and/or iterating through all elements in a
+collection then I recommend [lo-dash](http://lodash.com/).
+
+If you plan on being lazy or working with infinite lists then this is the right
+tool for that job.
+
+Your mileage may vary.
 
 
 ## `License`
