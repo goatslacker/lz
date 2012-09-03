@@ -53,8 +53,6 @@ fizzbuzz.take(5).toArray()
 
 - chainable
 
-    * [$ | toArray](#toarray)
-    * [toString](#tostring)
     * [compact](#compact)
     * [concat](#concatarray--object-lz)
     * [cycle](#cycle)
@@ -72,35 +70,17 @@ fizzbuzz.take(5).toArray()
 
 - value
 
-    * [and](#and)
     * [all](#allfunction)
+    * [and](#and)
     * [any](#anyfunction)
     * [at](#atnumber)
+    * [$ | toArray](#toarray)
+    * [toString](#tostring)
 
 
 ### `chainable`
 
 The following functions return this (Object lz)
-
-
-### `toArray()`
-
-Forceful method which returns an Array. Alias is `$()`.
-
-```javascript
-[1, 2, 3].lz().take(2).toArray()
-// = [1, 2]
-```
-
-
-### `toString()`
-
-Forceful method which returns the result as a String.
-
-```javascript
-lz('Bananas').toString()
-// = Bananas
-```
 
 
 ### `compact()`
@@ -287,19 +267,6 @@ each element in both lists generating a new list from the result.
 These functions return a value.
 
 
-### `and()`
-
-Returns false if any element in the list is falsy, otherwise returns true.
-
-```javascript
-[null].lz().and()
-// = false
-
-lz('i am true to you').and()
-// = true
-```
-
-
 ### `all(Function)`
 
 Applies the function to each element in the collection,
@@ -310,6 +277,19 @@ is false, otherwise returns true.
 [2, 4, 6, 8, 10]
   .lz()
   .all(function (n) { return n % 2 === 0 })
+// = true
+```
+
+
+### `and()`
+
+Returns false if any element in the list is falsy, otherwise returns true.
+
+```javascript
+[null].lz().and()
+// = false
+
+lz('i am true to you').and()
 // = true
 ```
 
@@ -339,6 +319,27 @@ lz('chocolate').at(3)
 lz([1, 2, 3]).at(0)
 // = 1
 ```
+
+
+### `toArray()`
+
+Forceful method which returns an Array. Alias is `$()`.
+
+```javascript
+[1, 2, 3].lz().take(2).toArray()
+// = [1, 2]
+```
+
+
+### `toString()`
+
+Forceful method which returns the result as a String.
+
+```javascript
+lz('Bananas').toString()
+// = Bananas
+```
+
 
 
 ## `License`
