@@ -28,7 +28,9 @@ exports.fizzbuzz = function (lz, assert) {
   var fizzbuzz = lz.zipWith(function (a, b) { return a + b }, three, five)
 
   assert.deepEqual(
-    fizzbuzz.take(5).$(),
-    ['', '', 'fizz', '', 'buzz']
+    fizzbuzz.take(15).$(),
+    ['', '', 'fizz', '', 'buzz',
+    'fizz', '', '', 'fizz', 'buzz',
+    '', 'fizz', '', '', 'fizzbuzz']
   )
 }
