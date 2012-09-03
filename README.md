@@ -78,6 +78,13 @@ fizzbuzz.take(5).toArray()
     * [and](#and)
     * [any](#anyfunction)
     * [at](#atnumber)
+    * [foldl](#foldlfunction)
+    * [head](#head)
+    * [last](#last)
+    * [nil](#nil)
+    * [max](#maxfunction)
+    * [min](#minfunction)
+    * [or](#or)
     * [$ | toArray](#toarray)
     * [toString](#tostring)
 
@@ -322,6 +329,86 @@ lz('chocolate').at(3)
 
 lz([1, 2, 3]).at(0)
 // = 1
+```
+
+
+### `foldl(Function)`
+
+Reduces the list down to a single value from left to right.
+
+```javascript
+[1, 2, 3, 4, 5]
+  .lz()
+  .foldl(function (a, b) { return a + b })
+// = 15
+```
+
+
+### `head()`
+
+Extracts the first element of the collection.
+
+```javascript
+lz('first').head()
+// = 'f'
+```
+
+
+### `last()`
+
+Extracts the last element in the collection.
+
+```javascript
+lz('last').last()
+// = 't'
+```
+
+
+### `nil()`
+
+Returns true if the list is empty or filled with empty values. Otherwise returns false.
+
+```javascript
+[].lz().nil()
+// = true
+
+[null, null].lz().nil()
+// = true
+
+[false].lz().nil()
+// = false
+```
+
+
+### `max(Function)`
+
+Returns the largest element in the collection. If a function is provided the
+callback function will be applied to each element before comparing.
+
+```javascript
+[1, 2, 3].lz().max()
+// = 3
+```
+
+
+### `min(Function)`
+
+Returns the smallest element in the collection. If a function is provided the
+callback function will be applied to each element before comparing.
+
+```javascript
+[1, 2, 3].lz().min()
+// = 1
+```
+
+
+### `or()`
+
+Returns true if any element in the list is truthy, otherwise returns false.
+
+```javascript
+[true, false, true].lz().or()
+// = true
 ```
 
 

@@ -355,14 +355,14 @@
   }
 
   // @value
-  lz_prototype.elem = function (n) {
+  lz_prototype.elem = function (x) {
     var item
     var i = this.length
 
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item === n) return true
+      if (item === x) return true
     }
 
     return false
@@ -395,12 +395,12 @@
     return true
   }
 
-  lz_prototype.max = function () {
-    return lz.max(this.$())
+  lz_prototype.max = function (fn) {
+    return lz.max(this.$(), fn)
   }
 
-  lz_prototype.min = function () {
-    return lz.min(this.$())
+  lz_prototype.min = function (fn) {
+    return lz.min(this.$(), fn)
   }
 
   // @value
@@ -424,7 +424,7 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item === true) return true
+      if (!!item) return true
     }
 
     return false
