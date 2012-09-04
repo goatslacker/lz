@@ -88,6 +88,21 @@ fizzbuzz.take(5).toArray()
     * [$ | toArray](#toarray)
     * [toString](#tostring)
 
+- static
+
+    * [cycle](#cyclearray)
+    * [flatten](#flattenarray-boolean)
+    * [foldl](#foldlfunction-array)
+    * [iterate](#iteratefunction-number)
+    * [lines](#lines-string)
+    * [max](#maxarray-function)
+    * [min](#minarray-function)
+    * [range](#rangenumber-number)
+    * [repeat](#repeatnumber)
+    * [replicate](#replicatenumber-number)
+    * [words](#words-string)
+    * [zipWith](#zipwithfunction-array-array)
+
 
 ### `chainable`
 
@@ -179,6 +194,16 @@ function provided is not true.
   .filter(function (x) { return x.color === 'red' })
   .toArray()
 // = [{ color: 'red' }, { color: 'red' }]
+```
+
+
+### `flatten(Boolean)`
+
+Flattens a nested Array. If shallow is truthy Array is flattened to a single level.
+
+```javascript
+[[1], [2], [3]].lz().flatten().toArray()
+// = [1, 2, 3]
 ```
 
 
@@ -430,6 +455,42 @@ Forceful method which returns the result as a String.
 lz('Bananas').toString()
 // = Bananas
 ```
+
+
+### `static`
+
+These functions are part of the lz Object namespace.
+
+
+### `cycle(Array)`
+
+See [lz.prototype.cycle](#cycle).
+
+
+### `flatten(Array, Boolean)`
+
+See [lz.prototype.flatten](#flattenboolean).
+
+
+### `foldl(Function, Array)`
+
+See [lz.prototype.foldl](#foldlfunction).
+
+
+### `max(Function, Array)`
+
+See [lz.prototype.max](#maxfunction).
+
+
+### `min(Function, Array)`
+
+See [lz.prototype.min](#minfunction).
+
+
+### `zipWith(Function, Array, Array)`
+
+See [lz.prototype.zipWith](#zipwithfunction-array).
+
 
 
 ## `Speed`

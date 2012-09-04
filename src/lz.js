@@ -334,8 +334,8 @@
     return (item = this.next()) === UNDEFINED ? null : item
   }
 
-  lz_prototype.flatten = function () {
-    return lz.flatten(this.$())
+  lz_prototype.flatten = function (shallow) {
+    return lz.flatten(this.$(), shallow)
   }
 
   // @value
