@@ -8,8 +8,8 @@ this is a collection of useful functions for working with lists and text
 as efficiently as possible.
 
 
-## `Examples`
 
+## `Examples`
 
 ### Fizzbuzz
 ```javascript
@@ -51,6 +51,7 @@ fizzbuzz.take(5).toArray()
   duplicate([1, 2, 3])
   // = [1, 1, 2, 2, 3, 3]
 ```
+
 
 
 ## `API`
@@ -477,6 +478,27 @@ See [lz.prototype.flatten](#flattenboolean).
 See [lz.prototype.foldl](#foldlfunction).
 
 
+### `iterate(Function, Number)`
+
+Creates an infinite list by applying the function repeatedly
+to the last element in the list, starting with the number provided.
+
+```javascript
+lz.iterate(function (x) { return x + 1 }, 1).take(5).toArray()
+// = [1, 2, 3, 4, 5]
+```
+
+
+### `lines(String)`
+
+Convert a string into a list split by lines.
+
+```javascript
+lz.lines('1. One\n2. Two').toArray()
+// = ['1. One', '2. Two']
+```
+
+
 ### `max(Function, Array)`
 
 See [lz.prototype.max](#maxfunction).
@@ -485,6 +507,57 @@ See [lz.prototype.max](#maxfunction).
 ### `min(Function, Array)`
 
 See [lz.prototype.min](#minfunction).
+
+
+### `range(Number, Number)`
+
+Create a finite or infinite list from a range of numbers.
+
+```javascript
+lz.range(1, Infinity).take(5).toArray()
+// = [1, 2, 3, 4, 5]
+
+lz.range(5, 10).toArray()
+// = [5, 6, 7, 8, 9, 10]
+
+lz.range(1, 10).filter(function (x) { return x % 3 === 0 }).toArray()
+// = [3, 6, 9]
+```
+
+
+### `repeat(Number)`
+
+Creates an infinite list with just a single Number as the value.
+Same as `lz.cycle([Number])`
+
+```javascript
+lz.repeat(4).take(7).toArray()
+// = [4, 4, 4, 4, 4, 4, 4]
+```
+
+
+### `replicate(Number, Number)`
+
+Creates a finite list with just a single Number as the value.
+Similar to `lz.repeat(Number).take(Number)`
+
+```javascript
+lz.replicate(3, 1).toArray()
+// = [3]
+
+lz.replicate(1, 3).toArray()
+// = [1, 1, 1]
+```
+
+
+### `words(String)`
+
+Convert a string into a list split by words.
+
+```javascript
+lz.lines('My cat is also lazy').toArray()
+// = ['My', 'cat', 'is', 'also', 'lazy']
+```
 
 
 ### `zipWith(Function, Array, Array)`
@@ -506,6 +579,7 @@ If you plan on being lazy or working with infinite lists then this is the right
 tool for that job.
 
 Your mileage may vary.
+
 
 
 ## `License`
