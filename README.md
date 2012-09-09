@@ -24,7 +24,8 @@ fizzbuzz.take(5).toArray()
 ### Factorial
 ```javascript
   // Return factorial of 4
-  lz([1, 2, 3, 4]).scanl(function (a, b) { return a * b }).at(5)
+  // note you should use `new` but you don't have to
+  new lz([1, 2, 3, 4]).scanl(function (a, b) { return a * b }).at(5)
 ```
 
 
@@ -34,22 +35,6 @@ fizzbuzz.take(5).toArray()
   lz.range(1, 999)
   .filter(function (n) { return n % 3 === 0 || n % 5 === 0 })
   .foldl(function (a, b) { return a + b })
-```
-
-
-### 99 Haskell Problems. Problem 14
-
-```javascript
-  // Duplicate elements of a list
-
-  var duplicate = function (list) {
-    // note you should use `new` but you don't have to
-    // you could also do list.lz() to create a new instance
-    return new lz(list)
-      .concatMap(function (x) { return [x, x] })
-  }
-  duplicate([1, 2, 3])
-  // = [1, 1, 2, 2, 3, 3]
 ```
 
 
