@@ -43,25 +43,30 @@
     return results
   }
 
-  lz_prototype.toString = function () {
-    if (this._value) {
-      return this._value.join('')
+  lz_prototype.toString = function (joinBy) {
+    if (typeof joinBy !== 'string') {
+      joinBy = ''
     }
 
-    var results = ''
-    var item
-    var n = this.length
+    if (this._value) {
+      return this._value.join(joinBy)
+    }
 
-    while (n > 0) {
+    var result = ''
+    var item, next
+
+    while (true) {
       item = this.next()
       if (item === UNDEFINED) break
-      results += item
-      n -= 1
+      result += item
+      next = this.next()
+      if (next === UNDEFINED) break
+      result += joinBy + next
     }
 
-    this._value = results
+    this._value = result
 
-    return results
+    return result
   }
 
   lz_prototype.compact = function () {

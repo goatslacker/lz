@@ -172,3 +172,19 @@ exports.nil = function (lz, assert, _) {
     false
   )
 }
+
+exports.batman = function (lz, assert) {
+  assert.equal(
+    ['Na']
+      .lz()
+      .cycle()
+      .take(10)
+      .toString(' ') + ' Batman!',
+    'Na Na Na Na Na Na Na Na Na Na Batman!'
+  )
+
+  assert.equal(
+    lz.replicate(2, 'foo').toString('-'),
+    ['foo-foo']
+  )
+}

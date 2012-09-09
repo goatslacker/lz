@@ -154,8 +154,7 @@ Generates an infinite loop composed of the elements of the current list.
   .lz()
   .cycle()
   .take(10)
-  .toArray()
-  .join(' ') + ' Batman!'
+  .toString(' ') + ' Batman!'
 // = Na Na Na Na Na Na Na Na Na Na Batman!
 ```
 
@@ -533,6 +532,9 @@ Same as `lz.cycle([Number])`
 ```javascript
 lz.repeat(4).take(7).toArray()
 // = [4, 4, 4, 4, 4, 4, 4]
+
+lz.repeat('ya').take(3).toString(' ')
+// = 'ya ya ya'
 ```
 
 
@@ -543,10 +545,10 @@ Similar to `lz.repeat(Number).take(Number)`
 
 ```javascript
 lz.replicate(3, 1).toArray()
-// = [3]
+// = [1, 1, 1]
 
 lz.replicate(1, 3).toArray()
-// = [1, 1, 1]
+// = [3]
 ```
 
 
