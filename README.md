@@ -64,10 +64,11 @@ fizzbuzz.take(5).toArray()
     * [drop](#dropnumber)
     * [dropWhile](#dropwhilefunction)
     * [filter](#filterfunction)
+    * [flatten](#flattenboolean)
     * [init](#init)
     * [map](#mapfunction)
     * [scanl](#scanlfunction)
-    * [sort](#sort)
+    * [sort](#sortfunction)
     * [tail](#tail)
     * [take](#takenumber)
     * [takeWhile](#takewhilefunction)
@@ -95,13 +96,13 @@ fizzbuzz.take(5).toArray()
     * [flatten](#flattenarray-boolean)
     * [foldl](#foldlfunction-array)
     * [iterate](#iteratefunction-number)
-    * [lines](#lines-string)
-    * [max](#maxarray-function)
+    * [lines](#linesstring)
+    * [max](#maxarrayfunction)
     * [min](#minarray-function)
     * [range](#rangenumber-number)
     * [repeat](#repeatnumber)
     * [replicate](#replicatenumber-number)
-    * [words](#words-string)
+    * [words](#wordsstring)
     * [zipWith](#zipwithfunction-array-array)
 
 
@@ -498,12 +499,12 @@ lz.lines('1. One\n2. Two').toArray()
 ```
 
 
-### `max(Function, Array)`
+### `max(Array, Function)`
 
 See [lz.prototype.max](#maxfunction).
 
 
-### `min(Function, Array)`
+### `min(Array, Function)`
 
 See [lz.prototype.min](#minfunction).
 
