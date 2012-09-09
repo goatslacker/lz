@@ -1,4 +1,5 @@
 (function (exports) {
+/*jshint asi: true, eqnull: true, newcap: false, validthis: true, node: true */
   'use strict';
 
   var UNDEFINED = {}
@@ -642,8 +643,8 @@
       if (arg == null) arg = []
 
       return function (a) {
-        xargs = arg.concat(a)
-        if (xargs.length < fn.length) return curry(fn)
+        var xargs = arg.concat(a)
+        if (xargs.length < fn.length) return lz.fp.curry(fn)
         else fn.apply(fn, xargs)
       }
     }
