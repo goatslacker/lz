@@ -216,7 +216,10 @@
     return this
   }
 
-  lz_prototype.sort = Array.prototype.sort
+  lz_prototype.sort = function (fn) {
+    this._value = this._list = Array.prototype.sort.call(this._list, fn)
+    return this
+  }
 
   lz_prototype.tail = function () {
     var results = []
