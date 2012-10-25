@@ -198,17 +198,6 @@
     return item
   }
 
-  lz_prototype.prev = function () {
-    if (this.pre) this.pre(this._i - 1)
-    var item = this._list[--this._i]
-    if (this._i === -1) return UNDEFINED
-    for (var j = 0; j < this._fn.length; j += 1) {
-      item = this._fn[j](item)
-      if (item === FALSE) return this.prev()
-    }
-    return item
-  }
-
   lz_prototype.scanl = function (fn) {
     this._value = null
     var prev
@@ -385,10 +374,17 @@
 
   // @value
   lz_prototype.last = function () {
+    var n = -1
+    var result
     var item
-    this._i = this.length
-    return (item = this.prev()) === UNDEFINED ? null : item
+    while (++n < this.length) {
+      item = this.next()
+      if (item === UNDEFINED) break
+      result = item
+    }
+    return result
   }
+
 
   lz_prototype.nil = function () {
     var item
