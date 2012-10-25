@@ -652,6 +652,6 @@
   if (typeof module !== 'undefined') {
     module.exports = lz
   } else {
-    exports.lz = lz
+    exports.lz = lz;
   }
-}.call(this));
+}(this));
