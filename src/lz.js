@@ -210,6 +210,10 @@
     return this
   }
 
+  lz_prototype.splitWith = function (fn) {
+    return new lz(lz.splitWith(fn, this._list))
+  }
+
   lz_prototype.tail = function () {
     var results = []
     var item
@@ -604,15 +608,15 @@
   }
 
   lz.splitWith = function (fn, coll) {
-    var l = coll.length;
-    var i = -1;
-    var results = [];
+    var l = coll.length
+    var i = -1
+    var results = []
 
     while (++i < l) {
       if (!fn(coll[i])) {
-        break;
+        break
       }
-      results.push(coll[i]);
+      results.push(coll[i])
     }
 
     return [results, coll.slice(i)]
@@ -667,6 +671,6 @@
   if (typeof module !== 'undefined') {
     module.exports = lz
   } else {
-    exports.lz = lz;
+    exports.lz = lz
   }
 }(this));
