@@ -1,0 +1,50 @@
+<script src="node_modules/benchmark/benchmark.js"></script>
+<script src="node_modules/wu/lib/wu.js"></script>
+<script src="node_modules/lodash/lodash.js"></script>
+<script src="src/lz.js"></script>
+
+<script>
+var benchmark = new Benchmark.Suite;
+function bench(tests) {
+  console.log('Starting benchmark...');
+
+  Object.keys(tests).forEach(function (name) {
+    benchmark.add(name, tests[name])
+  })
+
+  benchmark
+  .on('cycle', function(event) {
+    console.log(String(event.target))
+  })
+  .on('complete', function() {
+    console.log('Fastest is ' + this.filter('fastest').pluck('name'))
+  })
+  .run()
+}
+</script>
+
+<script>
+var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+var even = function (n) {
+  return n % 2 === 0
+}
+
+function _lodash() {
+  return _.filter(a, even).shift()
+}
+
+function _lz() {
+  return new lz(a).filter(even).head()
+}
+
+function _wu() {
+  return wu(a).filter(even).next()
+}
+
+bench({
+  'lodash': _lodash,
+  'lz': _lz,
+  'wu': _wu
+})
+</script>

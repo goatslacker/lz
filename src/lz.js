@@ -603,6 +603,21 @@
     return z
   }
 
+  lz.splitWith = function (fn, coll) {
+    var l = coll.length;
+    var i = -1;
+    var results = [];
+
+    while (++i < l) {
+      if (!fn(coll[i])) {
+        break;
+      }
+      results.push(coll[i]);
+    }
+
+    return [results, coll.slice(i)]
+  }
+
   lz.words = function (str) {
     return new lz(str.split(' '))
   }
