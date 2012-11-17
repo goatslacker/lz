@@ -474,6 +474,18 @@
   }
 
 
+  lz.concatMap = function (fn, coll) {
+    var l = coll.length
+    var i = -1
+    var results = []
+
+    while (++i < l) {
+      results.push.apply(results, fn(coll[i]))
+    }
+
+    return results
+  }
+
   lz.cycle = function (list) {
     var z = new lz(list)
     var length = list.length
