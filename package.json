@@ -2,7 +2,7 @@
   "author": "Josh Perez <josh@goatslacker.com> (http://www.goatslacker.com)",
   "name": "lz",
   "description": "Lazy functional programming",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
     "url": "git://github.com/goatslacker/lz.git"
   },
