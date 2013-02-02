@@ -1,5 +1,15 @@
 (function (exports) {
-/*jshint asi: true, eqnull: true, newcap: false, validthis: true, node: true */
+/*jshint
+  asi: true,
+  boss: true,
+  camelcase: false,
+  curly: false,
+  eqnull: true,
+  newcap: false,
+  node: true,
+  plusplus: false,
+  validthis: true
+*/
   'use strict';
 
   var UNDEFINED = {}
