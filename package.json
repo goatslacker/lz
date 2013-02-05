@@ -6,17 +6,14 @@
   "repository": {
     "url": "git://github.com/goatslacker/lz.git"
   },
-  "main": "src/lz.js",
+  "main": "lz.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test"
   },
   "dependencies": {},
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
     "node": "*"
-  },
-  "forge": {
-    "compress": true
   }
 }
