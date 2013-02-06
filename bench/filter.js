@@ -4,22 +4,22 @@ var wu = require('wu').wu
 
 var assert = require('assert')
 
-var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+var data = require('./_data').a
 
 var even = function (n) {
   return n % 2 === 0
 }
 
 function _lodash() {
-  return _.filter(a, even).shift()
+  return _.first(_.filter(data, even))
 }
 
 function _lz() {
-  return new lz(a).filter(even).head()
+  return new lz(data).filter(even).head()
 }
 
 function _wu() {
-  return wu(a).filter(even).next()
+  return wu(data).filter(even).next()
 }
 
 assert.deepEqual(_lodash(), _lz())

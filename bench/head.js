@@ -4,18 +4,18 @@ var wu = require('wu').wu
 
 var assert = require('assert')
 
-var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+var data = require('./_data').a
 
 function _lodash() {
-  return _.first(a)
+  return _.first(data)
 }
 
 function _lz() {
-  return new lz(a).head()
+  return new lz(data).head()
 }
 
 function _wu() {
-  return wu(a).next()
+  return wu(data).next()
 }
 
 assert.deepEqual(_lodash(), _lz())

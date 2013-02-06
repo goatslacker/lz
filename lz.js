@@ -80,6 +80,15 @@
     return result
   }
 
+  // reset the counter so there are no "side effects"
+  // example:
+  // var z = new lz([1, 2, 3])
+  // calling z.head() will always produce 1
+  lz_prototype._r = function (value) {
+    this._i = 0
+    return value
+  }
+
   lz_prototype.compact = function () {
     this._value = null
     this._fn.push(function (x) {
@@ -303,10 +312,10 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (!item) return false
+      if (!item) return this._r(false)
     }
 
-    return true
+    return this._r(true)
   }
 
   // @value
@@ -317,10 +326,10 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (fn(item) === false) return false
+      if (fn(item) === false) return this._r(false)
     }
 
-    return true
+    return this._r(true)
   }
 
   // @value
@@ -331,19 +340,19 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (fn(item) === true) return true
+      if (fn(item) === true) return this._r(true)
     }
 
-    return false
+    return this._r(false)
   }
 
   lz_prototype.at = function (n) {
     while (--n > 1) {
-      if (this.next() === UNDEFINED) return null
+      if (this.next() === UNDEFINED) return this._r(null)
     }
 
-    var item
-    return (item = this.next()) === UNDEFINED ? null : item
+    var item = this.next()
+    return this._r(item === UNDEFINED ? null : item)
   }
 
   lz_prototype.flatten = function (shallow) {
@@ -356,14 +365,15 @@
     var i = this.length
 
     result = this.next()
-    if (result === UNDEFINED) return null
+    if (result === UNDEFINED) return this._r(null)
 
     while (i-- > 0) {
       next = this.next()
       if (next === UNDEFINED) break
       result = fn(result, next)
     }
-    return result
+
+    return this._r(result)
   }
 
   // @value
@@ -374,16 +384,16 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item === x) return true
+      if (item === x) return this._r(true)
     }
 
-    return false
+    return this._r(false)
   }
 
   // @value
   lz_prototype.head = function () {
-    var item
-    return (item = this.next()) === UNDEFINED ? null : item
+    var item = this.next()
+    return this._r(item === UNDEFINED ? null : item)
   }
 
   // @value
@@ -391,27 +401,29 @@
     var n = -1
     var result
     var item
+
     while (++n < this.length) {
       item = this.next()
       if (item === UNDEFINED) break
       result = item
     }
-    return result
+
+    return this._r(result)
   }
 
 
   lz_prototype.nil = function () {
     var item
-    if (this.length === 0) return true
+    if (this.length === 0) return this._r(true)
     var i = this.length
 
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item != null) return false
+      if (item != null) return this._r(false)
     }
 
-    return true
+    return this._r(true)
   }
 
   lz_prototype.max = function (fn) {
@@ -430,9 +442,9 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item === n) return false
+      if (item === n) return this._r(false)
     }
-    return true
+    return this._r(true)
   }
 
   // @value
@@ -443,10 +455,10 @@
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (!!item) return true
+      if (!!item) return this._r(true)
     }
 
-    return false
+    return this._r(false)
   }
 
   // @value XXX
@@ -484,6 +496,7 @@
   }
 
 
+  // Static
   lz.concatMap = function (fn, coll) {
     var l = coll.length
     var i = -1
@@ -671,24 +684,9 @@
   }
 
   // extras
-  lz.fp = {}
-  lz.fp.flip = function (a, b) { return b }
-  lz.fp.identity = function (a) { return a }
-  lz.fp.not = function (b) { return !b }
-  lz.fp.curry = function (fn) {
-    if (fn.length < 1) {
-      return fn
-    }
-    return function (arg) {
-      if (arg == null) arg = []
-
-      return function (a) {
-        var xargs = arg.concat(a)
-        if (xargs.length < fn.length) return lz.fp.curry(fn)
-        else fn.apply(fn, xargs)
-      }
-    }
-  }
+  lz.flip = function (a, b) { return b }
+  lz.identity = function (a) { return a }
+  lz.not = function (b) { return !b }
 
   if (typeof module !== 'undefined') {
     module.exports = lz
