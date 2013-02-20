@@ -66,6 +66,7 @@ fizzbuzz.take(5).toArray()
     * [any](#anyfunction)
     * [at](#atnumber)
     * [foldl](#foldlfunction)
+    * [elem](#elemgeneric)
     * [head](#head)
     * [last](#last)
     * [nil](#nil)
@@ -77,6 +78,7 @@ fizzbuzz.take(5).toArray()
 
 - static
 
+    * [concatMap](#concatmapfunction-array)
     * [cycle](#cyclearray)
     * [flatten](#flattenarray-boolean)
     * [foldl](#foldlfunction-array)
@@ -355,6 +357,23 @@ Reduces the list down to a single value from left to right.
 ```
 
 
+### `elem(Generic)`
+
+Returns true if the list contains the item provided.
+
+```javascript
+[1, 2, 3, 4, 5]
+  .lz()
+  .elem(6)
+// = false
+
+[null, 0, false, NaN, undefined]
+  .lz()
+  .elem(NaN)
+// = true
+```
+
+
 ### `head()`
 
 Extracts the first element of the collection.
@@ -446,6 +465,16 @@ lz('Bananas').toString()
 ### `static`
 
 These functions are part of the lz Object namespace.
+
+
+### `concatMap(Function, Array)`
+
+Forceful method which returns the result as a String.
+
+```javascript
+lz.concatMap(function (a) { return [a, a] }, [1, 2, 3])
+// = [1, 1, 2, 2, 3, 3]
+```
 
 
 ### `cycle(Array)`
