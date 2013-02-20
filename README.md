@@ -469,7 +469,8 @@ These functions are part of the lz Object namespace.
 
 ### `concatMap(Function, Array)`
 
-Forceful method which returns the result as a String.
+Returns a list by applying the function provided to all elements in the list
+and then concatenating the returned list into the result.
 
 ```javascript
 lz.concatMap(function (a) { return [a, a] }, [1, 2, 3])
