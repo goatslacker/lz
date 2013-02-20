@@ -347,7 +347,10 @@
   }
 
   lz_prototype.at = function (n) {
-    while (--n > 1) {
+    n = n < 0 ? this.length + n : n
+    if (n < 0) return this._r(null)
+
+    while (--n >= 0) {
       if (this.next() === UNDEFINED) return this._r(null)
     }
 
