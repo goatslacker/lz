@@ -33,53 +33,6 @@
 
   var lz_prototype = lz.prototype
 
-  lz_prototype.$ = lz_prototype.toArray = function () {
-    if (this._value) {
-      return this._value
-    }
-
-    var results = []
-    var item
-    var n = this.length
-
-    while (n > 0) {
-      item = this.next()
-      if (item === UNDEFINED) break
-      results.push(item)
-      n -= 1
-    }
-
-    this._value = results
-
-    return results
-  }
-
-  lz_prototype.toString = function (joinBy) {
-    if (typeof joinBy !== 'string') {
-      joinBy = ''
-    }
-
-    if (this._value) {
-      return this._value.join(joinBy)
-    }
-
-    var result = ''
-    var item, next
-
-    while (true) {
-      item = this.next()
-      if (item === UNDEFINED) break
-      result += item
-      next = this.next()
-      if (next === UNDEFINED) break
-      result += joinBy + next
-    }
-
-    this._value = result
-
-    return result
-  }
-
   // reset the counter so there are no "side effects"
   // example:
   // var z = new lz([1, 2, 3])
@@ -88,6 +41,19 @@
     this._i = 0
     return value
   }
+
+  lz_prototype.next = function () {
+    if (this.pre) this.pre(this._i)
+    var item = this._list[this._i++]
+    if (this._i > this.length) return UNDEFINED
+    for (var j = 0; j < this._fn.length; j += 1) {
+      item = this._fn[j](item)
+      if (item === FALSE) return this.next()
+    }
+    return item
+  }
+
+  // Prototype
 
   lz_prototype.compact = function () {
     this._value = null
@@ -179,6 +145,10 @@
     return this
   }
 
+  lz_prototype.flatten = function (shallow) {
+    return lz.flatten(this.$(), shallow)
+  }
+
   lz_prototype.init = function () {
     var results = []
     var item
@@ -204,17 +174,6 @@
     this._value = null
     this._fn.push(function (x) { return f(x) })
     return this
-  }
-
-  lz_prototype.next = function () {
-    if (this.pre) this.pre(this._i)
-    var item = this._list[this._i++]
-    if (this._i > this.length) return UNDEFINED
-    for (var j = 0; j < this._fn.length; j += 1) {
-      item = this._fn[j](item)
-      if (item === FALSE) return this.next()
-    }
-    return item
   }
 
   lz_prototype.scanl = function (fn) {
@@ -303,22 +262,8 @@
     return lz.zipWith(fn, list, this._list)
   }
 
+  // Values
 
-  // @value
-  lz_prototype.and = function () {
-    var item
-    var i = this.length
-
-    while (i-- > 0) {
-      item = this.next()
-      if (item === UNDEFINED) break
-      if (!item) return this._r(false)
-    }
-
-    return this._r(true)
-  }
-
-  // @value
   lz_prototype.all = function (fn) {
     var item
     var i = this.length
@@ -332,7 +277,19 @@
     return this._r(true)
   }
 
-  // @value
+  lz_prototype.and = function () {
+    var item
+    var i = this.length
+
+    while (i-- > 0) {
+      item = this.next()
+      if (item === UNDEFINED) break
+      if (!item) return this._r(false)
+    }
+
+    return this._r(true)
+  }
+
   lz_prototype.any = function (fn) {
     var item
     var i = this.length
@@ -358,11 +315,6 @@
     return this._r(item === UNDEFINED ? null : item)
   }
 
-  lz_prototype.flatten = function (shallow) {
-    return lz.flatten(this.$(), shallow)
-  }
-
-  // @value
   lz_prototype.foldl = function (fn) {
     var result, next
     var i = this.length
@@ -379,27 +331,30 @@
     return this._r(result)
   }
 
-  // @value
   lz_prototype.elem = function (x) {
     var item
     var i = this.length
+    var notANumber = isNaN(x)
 
     while (i-- > 0) {
       item = this.next()
       if (item === UNDEFINED) break
-      if (item === x) return this._r(true)
+
+      if (item === x) {
+        return this._r(x !== 0 || 1 / x === 1 / item)
+      } else if (notANumber && x !== x && item !== item) {
+        return this._r(true)
+      }
     }
 
     return this._r(false)
   }
 
-  // @value
   lz_prototype.head = function () {
     var item = this.next()
     return this._r(item === UNDEFINED ? null : item)
   }
 
-  // @value
   lz_prototype.last = function () {
     var n = -1
     var result
@@ -413,7 +368,6 @@
 
     return this._r(result)
   }
-
 
   lz_prototype.nil = function () {
     var item
@@ -437,20 +391,6 @@
     return lz.min(this.$(), fn)
   }
 
-  // @value
-  lz_prototype.notElem = function (n) {
-    var item
-    var i = this.length
-
-    while (i-- > 0) {
-      item = this.next()
-      if (item === UNDEFINED) break
-      if (item === n) return this._r(false)
-    }
-    return this._r(true)
-  }
-
-  // @value
   lz_prototype.or = function () {
     var item
     var i = this.length
@@ -462,6 +402,53 @@
     }
 
     return this._r(false)
+  }
+
+  lz_prototype.$ = lz_prototype.toArray = function () {
+    if (this._value) {
+      return this._value
+    }
+
+    var results = []
+    var item
+    var n = this.length
+
+    while (n > 0) {
+      item = this.next()
+      if (item === UNDEFINED) break
+      results.push(item)
+      n -= 1
+    }
+
+    this._value = results
+
+    return results
+  }
+
+  lz_prototype.toString = function (joinBy) {
+    if (typeof joinBy !== 'string') {
+      joinBy = ''
+    }
+
+    if (this._value) {
+      return this._value.join(joinBy)
+    }
+
+    var result = ''
+    var item, next
+
+    while (true) {
+      item = this.next()
+      if (item === UNDEFINED) break
+      result += item
+      next = this.next()
+      if (next === UNDEFINED) break
+      result += joinBy + next
+    }
+
+    this._value = result
+
+    return result
   }
 
   // @value XXX
@@ -498,8 +485,8 @@
     return result
   }
 
-
   // Static
+
   lz.concatMap = function (fn, coll) {
     var l = coll.length
     var i = -1
@@ -645,21 +632,6 @@
     return z
   }
 
-  lz.splitWith = function (fn, coll) {
-    var l = coll.length
-    var i = -1
-    var results = []
-
-    while (++i < l) {
-      if (!fn(coll[i])) {
-        break
-      }
-      results.push(coll[i])
-    }
-
-    return [results, coll.slice(i)]
-  }
-
   lz.words = function (str) {
     return new lz(str.split(' '))
   }
@@ -686,10 +658,14 @@
     }
   }
 
-  // extras
+  // Extras
+
   lz.flip = function (a, b) { return b }
+
   lz.identity = function (a) { return a }
+
   lz.not = function (b) { return !b }
+
 
   if (typeof module !== 'undefined') {
     module.exports = lz
