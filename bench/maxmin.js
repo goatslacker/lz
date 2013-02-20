@@ -14,11 +14,11 @@ function _lzmx() {
 }
 
 function _lodashmn() {
-  return _.max(a)
+  return _.min(a)
 }
 
 function _lzmn() {
-  return lz.max(a)
+  return lz.min(a)
 }
 
 assert.deepEqual(_lodashmx(), _lzmx())
