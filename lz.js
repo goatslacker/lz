@@ -15,6 +15,17 @@
   var UNDEFINED = {}
   var FALSE = {}
 
+  function _next() {
+    if (this.pre) this.pre(this._i)
+    var item = this._list[this._i++]
+    if (this._i > this.length) return UNDEFINED
+    for (var j = 0; j < this._fn.length; j += 1) {
+      item = this._fn[j](item)
+      if (item === FALSE) return this._next()
+    }
+    return item
+  }
+
   function lz(list) {
     if (!(this instanceof lz)) {
       return new lz(list)
@@ -42,16 +53,7 @@
     return value
   }
 
-  lz_prototype.next = function () {
-    if (this.pre) this.pre(this._i)
-    var item = this._list[this._i++]
-    if (this._i > this.length) return UNDEFINED
-    for (var j = 0; j < this._fn.length; j += 1) {
-      item = this._fn[j](item)
-      if (item === FALSE) return this.next()
-    }
-    return item
-  }
+  lz_prototype._next = _next
 
   // Prototype
 
@@ -71,7 +73,7 @@
     if (arr instanceof lz) {
       this._fn.push(function (x) {
         if (this._i > length) {
-          x = arr.next()
+          x = arr._next()
           this._list.push(x)
         }
         return x
@@ -98,7 +100,7 @@
     var item
 
     while (n-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) {
         this._value = []
         return this
@@ -119,7 +121,7 @@
     var item
 
     while (true) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) {
         this._value = []
         return this
@@ -155,7 +157,7 @@
     var n = this.length
 
     while (--n > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       results.push(item)
     }
@@ -193,10 +195,10 @@
     var item
     var n = this.length
 
-    this.next()
+    this._next()
 
     while (--n > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       results.push(item)
     }
@@ -216,7 +218,7 @@
     var item
 
     while (n-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       results.push(item)
     }
@@ -237,7 +239,7 @@
     var item
 
     while (true) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       result = fn(item)
       if (result === true) results.push(item)
@@ -265,7 +267,7 @@
     var i = this.length
 
     while (i-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       if (fn(item) === false) return this._r(false)
     }
@@ -278,7 +280,7 @@
     var i = this.length
 
     while (i-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       if (!item) return this._r(false)
     }
@@ -291,7 +293,7 @@
     var i = this.length
 
     while (i-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       if (fn(item) === true) return this._r(true)
     }
@@ -304,10 +306,10 @@
     if (n < 0) return this._r(null)
 
     while (--n >= 0) {
-      if (this.next() === UNDEFINED) return this._r(null)
+      if (this._next() === UNDEFINED) return this._r(null)
     }
 
-    var item = this.next()
+    var item = this._next()
     return this._r(item === UNDEFINED ? null : item)
   }
 
@@ -315,11 +317,11 @@
     var result, next
     var i = this.length
 
-    result = this.next()
+    result = this._next()
     if (result === UNDEFINED) return this._r(null)
 
     while (i-- > 0) {
-      next = this.next()
+      next = this._next()
       if (next === UNDEFINED) break
       result = fn(result, next)
     }
@@ -333,7 +335,7 @@
     var notANumber = isNaN(x)
 
     while (i-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
 
       if (item === x) {
@@ -347,7 +349,7 @@
   }
 
   lz_prototype.head = function () {
-    var item = this.next()
+    var item = this._next()
     return this._r(item === UNDEFINED ? null : item)
   }
 
@@ -357,7 +359,7 @@
     var item
 
     while (++n < this.length) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       result = item
     }
@@ -371,7 +373,7 @@
     var i = this.length
 
     while (i-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       if (item != null) return this._r(false)
     }
@@ -392,7 +394,7 @@
     var i = this.length
 
     while (i-- > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       if (!!item) return this._r(true)
     }
@@ -410,7 +412,7 @@
     var n = this.length
 
     while (n > 0) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       results.push(item)
       n -= 1
@@ -434,10 +436,10 @@
     var item, next
 
     while (true) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       result += item
-      next = this.next()
+      next = this._next()
       if (next === UNDEFINED) break
       result += joinBy + next
     }
@@ -453,10 +455,10 @@
     var item, next
 
     while (true) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       result += item
-      next = this.next()
+      next = this._next()
       if (next === UNDEFINED) break
       result += '\n' + next
     }
@@ -470,10 +472,10 @@
     var item, next
 
     while (true) {
-      item = this.next()
+      item = this._next()
       if (item === UNDEFINED) break
       result += item
-      next = this.next()
+      next = this._next()
       if (next === UNDEFINED) break
       result += ' ' + next
     }
@@ -502,12 +504,11 @@
     var z = new lz(list)
     var length = list.length
     z.length = Infinity
-    z._next = z.next
-    z.next = function () {
+    z._next = function () {
       if (this._i === length) {
         this._i = 0
       }
-      return this._next()
+      return _next.call(this)
     }
     return z
   }
@@ -534,11 +535,11 @@
     if (arr instanceof lz) {
       index = arr.length
 
-      value = arr.next()
+      value = arr._next()
       if (value === UNDEFINED) return null
 
       while (index-- > 0) {
-        item = arr.next()
+        item = arr._next()
         if (item === UNDEFINED) break
         value = fn(value, item)
       }
@@ -555,11 +556,10 @@
     var z = new lz([])
     var result
     z.length = Infinity
-    z._next = z.next
-    z.next = function () {
+    z._next = function () {
       result = fn(result) || n
       this._list.push(result)
-      return this._next()
+      return _next.call(this)
     }
     return z
   }
@@ -616,10 +616,9 @@
   lz.repeat = function (n) {
     var z = new lz([])
     z.length = Infinity
-    z._next = z.next
-    z.next = function () {
+    z._next = function () {
       this._list.push(n)
-      return this._next()
+      return _next.call(this)
     }
     return z
   }
@@ -640,7 +639,7 @@
     z.length = list1.length < list2.length ? list1.length : list2.length
 
     if (!(list1 instanceof lz) && !(list2 instanceof lz)) {
-      z.next = function () {
+      z._next = function () {
         if (this._i >= this.length) return UNDEFINED
         return fn(list1[this._i], list2[this._i++])
       }
@@ -648,10 +647,9 @@
     } else {
       if (!(list1 instanceof lz)) list1 = lz(list1)
       if (!(list2 instanceof lz)) list2 = lz(list2)
-      z._next = z.next
-      z.next = function () {
-        this._list.push(fn(list1.next(), list2.next()))
-        return this._next()
+      z._next = function () {
+        this._list.push(fn(list1._next(), list2._next()))
+        return _next.call(this)
       }
       return z
     }
