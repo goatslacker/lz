@@ -1,40 +1,42 @@
-exports.empty = function (lz, assert) {
-  // empty string list
-  assert.equal(
-    lz(['']).head(),
-    ''
-  )
-}
+module.exports = {
+  empty: function (lz, assert) {
+    // empty string list
+    assert.equal(
+      lz(['']).head(),
+      ''
+    )
+  },
 
-exports.nil = function (lz, assert) {
-  // null
-  assert.equal(
-    lz([null]).head(),
-    null
-  )
-}
+  nil: function (lz, assert) {
+    // null
+    assert.equal(
+      lz([null]).head(),
+      null
+    )
+  },
 
-exports.falsy = function (lz, assert) {
-  // false
-  assert.equal(
-    lz([false]).head(),
-    false
-  )
-}
+  falsy: function (lz, assert) {
+    // false
+    assert.equal(
+      lz([false]).head(),
+      false
+    )
+  },
 
-exports.notdefined = function (lz, assert) {
-  // undefined
-  assert.deepEqual(
-    lz([false, undefined, undefined]).take(3).$(),
-    [false, undefined, undefined]
-  )
-}
+  notdefined: function (lz, assert) {
+    // undefined
+    assert.deepEqual(
+      lz([false, undefined, undefined]).take(3).$(),
+      [false, undefined, undefined]
+    )
+  },
 
-exports['result that does not exist'] = function (lz, assert) {
-  assert.equal(
-    lz([1, 2])
-    .filter(function (n) { return n === 3 })
-    .head(),
-    null
-  )
+  'result that does not exist': function (lz, assert) {
+    assert.equal(
+      lz([1, 2])
+      .filter(function (n) { return n === 3 })
+      .head(),
+      null
+    )
+  }
 }

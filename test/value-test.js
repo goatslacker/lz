@@ -4,182 +4,168 @@ var last = 5
 var init = [1, 2, 3, 4]
 var tail = [2, 3, 4, 5]
 
-exports.head = function (lz, assert) {
-  assert.equal(arr.lz().head(), head)
-}
+module.exports = {
 
-exports.last = function (lz, assert) {
-  assert.equal(arr.lz().last(), last)
-}
+  head: function (lz, assert) {
+    assert.equal(lz(arr).head(), head)
+  },
 
-exports.tail = function (lz, assert) {
-  assert.deepEqual(arr.lz().tail().$(), tail)
-}
+  last: function (lz, assert) {
+    assert.equal(lz(arr).last(), last)
+  },
 
-exports.init = function (lz, assert) {
-  assert.deepEqual(arr.lz().init().$(), init)
-}
+  tail: function (lz, assert) {
+    assert.deepEqual(lz(arr).tail().$(), tail)
+  },
 
-exports.elem = function (lz, assert) {
-  assert.equal(arr.lz().elem(5), true)
-  assert.equal(arr.lz().elem(6), false)
-}
+  init: function (lz, assert) {
+    assert.deepEqual(lz(arr).init().$(), init)
+  },
 
-exports['tail and more'] = function (lz, assert) {
-  assert.equal(
-    arr
-    .lz()
-    .tail()
-    .filter(function (n) {
-      return n % 2 !== 0
-    })
-    .head(),
-    3
-  )
+  elem: function (lz, assert) {
+    assert.equal(lz(arr).elem(5), true)
+    assert.equal(lz(arr).elem(6), false)
+  },
 
-  assert.deepEqual(
-    arr
-    .lz()
-    .tail()
-    .filter(function (n) {
-      return n % 2 !== 0
-    })
-    .$(),
-    [3, 5]
-  )
+  'tail and more': function (lz, assert) {
+    assert.equal(
+      lz(arr)
+      .tail()
+      .filter(function (n) {
+        return n % 2 !== 0
+      })
+      .head(),
+      3
+    )
 
-  assert.deepEqual(
-    arr
-    .lz()
-    .tail()
-    .takeWhile(function (n) {
-      return n < 4
-    })
-    .drop(1)
-    .$(),
-    [3]
-  )
+    assert.deepEqual(
+      lz(arr)
+      .tail()
+      .filter(function (n) {
+        return n % 2 !== 0
+      })
+      .$(),
+      [3, 5]
+    )
 
-  assert.deepEqual(
-    arr
-    .lz()
-    .tail()
-    .take(2)
-    .drop(1)
-    .$(),
-    [3]
-  )
-}
+    assert.deepEqual(
+      lz(arr)
+      .tail()
+      .takeWhile(function (n) {
+        return n < 4
+      })
+      .drop(1)
+      .$(),
+      [3]
+    )
 
-exports.and = function (lz, assert) {
-  assert.equal(
-    [true, true, true, true]
-    .lz()
-    .and(),
-    true
-  )
+    assert.deepEqual(
+      lz(arr)
+      .tail()
+      .take(2)
+      .drop(1)
+      .$(),
+      [3]
+    )
+  },
 
-  assert.equal(
-    [true, true, false, true]
-    .lz()
-    .and(),
-    false
-  )
-}
+  and: function (lz, assert) {
+    assert.equal(
+      lz([true, true, true, true])
+      .and(),
+      true
+    )
 
-exports['and + more'] = function (lz, assert) {
-  assert.equal(
-    [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    .lz()
-    .map(function (n) { return n % 2 === 0 })
-    .and(),
-    false
-  )
-}
+    assert.equal(
+      lz([true, true, false, true])
+      .and(),
+      false
+    )
+  },
 
-exports.any = function (lz, assert) {
-  assert.equal(
-    [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    .lz()
-    .any(function (n) { return n === 5 }),
-    true
-  )
+  'and + more': function (lz, assert) {
+    assert.equal(
+      lz([1, 2, 3, 4, 5, 6, 7, 8, 9])
+      .map(function (n) { return n % 2 === 0 })
+      .and(),
+      false
+    )
+  },
 
-  assert.equal(
-    [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    .lz()
-    .any(function (n) { return n > 10 }),
-    false
-  )
-}
+  any: function (lz, assert) {
+    assert.equal(
+      lz([1, 2, 3, 4, 5, 6, 7, 8, 9])
+      .any(function (n) { return n === 5 }),
+      true
+    )
 
-exports.all = function (lz, assert) {
-  assert.equal(
-    [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    .lz()
-    .all(function (n) { return n === 5 }),
-    false
-  )
+    assert.equal(
+      lz([1, 2, 3, 4, 5, 6, 7, 8, 9])
+      .any(function (n) { return n > 10 }),
+      false
+    )
+  },
 
-  assert.equal(
-    [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    .lz()
-    .all(function (n) { return n < 10 }),
-    true
-  )
-}
+  all: function (lz, assert) {
+    assert.equal(
+      lz([1, 2, 3, 4, 5, 6, 7, 8, 9])
+      .all(function (n) { return n === 5 }),
+      false
+    )
 
-exports.or = function (lz, assert) {
-  assert.equal(
-    [false, false, false, false]
-    .lz()
-    .or(),
-    false
-  )
+    assert.equal(
+      lz([1, 2, 3, 4, 5, 6, 7, 8, 9])
+      .all(function (n) { return n < 10 }),
+      true
+    )
+  },
 
-  assert.equal(
-    [false, false, true, false]
-    .lz()
-    .or(),
-    true
-  )
-}
+  or: function (lz, assert) {
+    assert.equal(
+      lz([false, false, false, false])
+      .or(),
+      false
+    )
 
-exports.nil = function (lz, assert, _) {
-  assert.equal(
-    [null, null, null]
-    .lz()
-    .nil(),
-    true
-  )
+    assert.equal(
+      lz([false, false, true, false])
+      .or(),
+      true
+    )
+  },
 
-  assert.equal(
-    [null, undefined, undefined]
-    .lz()
-    .nil(),
-    true
-  )
+  nil: function (lz, assert) {
+    assert.equal(
+      lz([null, null, null])
+      .nil(),
+      true
+    )
 
-  assert.equal(
-    [null, null, false]
-    .lz()
-    .nil(),
-    false
-  )
-}
+    assert.equal(
+      lz([null, undefined, undefined])
+      .nil(),
+      true
+    )
 
-exports.batman = function (lz, assert) {
-  assert.equal(
-    ['Na']
-      .lz()
-      .cycle()
-      .take(10)
-      .toString(' ') + ' Batman!',
-    'Na Na Na Na Na Na Na Na Na Na Batman!'
-  )
+    assert.equal(
+      lz([null, null, false])
+      .nil(),
+      false
+    )
+  },
 
-  assert.equal(
-    lz.replicate(2, 'foo').toString('-'),
-    ['foo-foo']
-  )
+  batman: function (lz, assert) {
+    assert.equal(
+      lz(['Na'])
+        .cycle()
+        .take(10)
+        .toString(' ') + ' Batman!',
+      'Na Na Na Na Na Na Na Na Na Na Batman!'
+    )
+
+    assert.equal(
+      lz.replicate(2, 'foo').toString('-'),
+      ['foo-foo']
+    )
+  }
 }

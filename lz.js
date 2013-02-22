@@ -188,10 +188,6 @@
     return this
   }
 
-  lz_prototype.splitWith = function (fn) {
-    return new lz(lz.splitWith(fn, this._list))
-  }
-
   lz_prototype.tail = function () {
     var results = []
     var item
