@@ -5,7 +5,7 @@ module.exports = {
     assert.deepEqual(
       lz.concatMap(function (n) {
         return [n, n]
-      }, arr),
+      }, arr).toArray(),
       [1, 1, 2, 2, 3, 3]
     )
   }

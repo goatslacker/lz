@@ -492,7 +492,10 @@
       results.push.apply(results, fn(coll[i]))
     }
 
-    return results
+    var instance = new lz(results)
+    instance._value = results
+
+    return instance
   }
 
   lz.cycle = function (list) {
