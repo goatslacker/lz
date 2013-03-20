@@ -11,7 +11,11 @@
     "test": "node test"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "testla": "*",
+    "bench": "*",
+    "dependency-injector": "*"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
