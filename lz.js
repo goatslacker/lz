@@ -15,33 +15,35 @@
   var UNDEFINED = {}
   var FALSE = {}
 
-  function _next() {
-    if (this.pre) this.pre(this._i)
-    var item = this._list[this._i++]
-    if (this._i > this.length) return UNDEFINED
-    for (var j = 0; j < this._fn.length; j += 1) {
-      item = this._fn[j](item)
-      if (item === FALSE) return this._next()
+  function _n() {
+    var _this = this
+    if (_this._p) _this._p(_this._i)
+    var item = _this._l[_this._i++]
+    if (_this._i > _this.length) return UNDEFINED
+    for (var j = 0; j < _this._f.length; j += 1) {
+      item = _this._f[j](item)
+      if (item === FALSE) return _this._n()
     }
     return item
   }
 
-  function push(list, x) {
+  function _p(list, x) {
     return typeof list === 'string'
       ? list.concat(x)
       : (list.push(x), list)
   }
 
   function lz(list) {
-    if (!(this instanceof lz)) {
+    var _this = this
+    if (!(_this instanceof lz)) {
       return new lz(list)
     }
 
-    this._fn = []
-    this._i = 0
-    this._list = list
+    _this._f = []
+    _this._i = 0
+    _this._l = list
 
-    this.length = list.length
+    _this.length = list.length
   }
 
   Object.defineProperty(Array.prototype, 'lz', {
@@ -59,98 +61,103 @@
     return value
   }
 
-  lz_prototype._next = _next
+  lz_prototype._n = _n
 
   // Prototype
 
   lz_prototype.compact = function () {
-    this._value = null
-    this._fn.push(function (x) {
+    var _this = this
+    _this._v = null
+    _this._f.push(function (x) {
       if (!x) return FALSE
       return x
     })
-    return this
+    return _this
   }
 
   lz_prototype.concat = function (arr) {
-    var length = this.length
-    this.length += arr.length
+    var _this = this
+    var length = _this.length
+    _this.length += arr.length
 
     if (arr instanceof lz) {
-      this._fn.push(function (x) {
-        if (this._i > length) {
-          x = arr._next()
-          this._list = push(this._list, x)
+      _this._f.push(function (x) {
+        if (_this._i > length) {
+          x = arr._n()
+          _this._l = _p(_this._l, x)
         }
         return x
-      }.bind(this))
+      })
     } else {
-      this._fn.push(function (x) {
-        if (this._i > length) {
-          x = arr[this._i - length - 1]
-          this._list = push(this._list, x)
+      _this._f.push(function (x) {
+        if (_this._i > length) {
+          x = arr[_this._i - length - 1]
+          _this._l = _p(_this._l, x)
         }
         return x
-      }.bind(this))
+      })
     }
 
-    return this
+    return _this
   }
 
   lz_prototype.cycle = function () {
-    return lz.cycle(this._list)
+    return lz.cycle(this._l)
   }
 
   lz_prototype.drop = function (n) {
-    this._value = null
+    var _this = this
+    _this._v = null
     var item
 
     while (n-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) {
-        this._value = []
-        return this
+        _this._v = []
+        return _this
       }
     }
 
-    this._list = this._list.slice(this._i)
+    _this._l = _this._l.slice(_this._i)
 
     // partial reset
-    this._i = 0
-    this.length = this._list.length
+    _this._i = 0
+    _this.length = _this._l.length
 
-    return this
+    return _this
   }
 
   lz_prototype.dropWhile = function (fn) {
-    this._value = null
+    var _this = this
+    _this._v = null
     var item
 
     while (true) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) {
-        this._value = []
-        return this
+        _this._v = []
+        return _this
       }
       if (fn(item) === false) break
     }
 
-    this._list = this._list.slice(this._i - 1)
+    _this._l = _this._l.slice(_this._i - 1)
 
     // partial reset
-    this._i = 0
-    this.length = this._list.length
+    _this._i = 0
+    _this.length = _this._l.length
 
-    return this
+    return _this
   }
 
   lz_prototype.filter = function (f) {
-    this._value = null
-    this._fn.push(function (x) {
+    var _this = this
+    _this._v = null
+    _this._f.push(function (x) {
       if (f(x) === true) return x
       else return FALSE
     })
-    return this
+    return _this
   }
 
   lz_prototype.flatten = function (shallow) {
@@ -158,30 +165,32 @@
   }
 
   lz_prototype.init = function () {
+    var _this = this
     var results = []
     var item
-    var n = this.length
+    var n = _this.length
 
     while (--n > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       results.push(item)
     }
 
-    this._list = this._value = results
+    _this._l = _this._v = results
 
     // reset
-    this._fn = []
-    this._i = 0
-    this.length = this._list.length
+    _this._f = []
+    _this._i = 0
+    _this.length = _this._l.length
 
-    return this
+    return _this
   }
 
   lz_prototype.map = function (f) {
-    this._value = null
-    this._fn.push(function (x) { return f(x) })
-    return this
+    var _this = this
+    _this._v = null
+    _this._f.push(function (x) { return f(x) })
+    return _this
   }
 
   lz_prototype.of = function (b) {
@@ -189,81 +198,86 @@
   }
 
   lz_prototype.scanl = function (fn) {
-    this._value = null
+    var _this = this
+    _this._v = null
     var prev
-    this._fn.push(function (x) { return (prev = fn(prev, x) || x) })
-    return this
+    _this._f.push(function (x) { return (prev = fn(prev, x) || x) })
+    return _this
   }
 
   lz_prototype.sort = function (fn) {
-    this._value = this._list = Array.prototype.sort.call(this._list, fn)
-    return this
+    var _this = this
+    _this._v = _this._l = Array.prototype.sort.call(_this._l, fn)
+    return _this
   }
 
   lz_prototype.tail = function () {
+    var _this = this
     var results = []
     var item
-    var n = this.length
+    var n = _this.length
 
-    this._next()
+    _this._n()
 
     while (--n > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       results.push(item)
     }
 
-    this._list = this._value = results
+    _this._l = _this._v = results
 
     // reset
-    this._fn = []
-    this._i = 0
-    this.length = this._list.length
+    _this._f = []
+    _this._i = 0
+    _this.length = _this._l.length
 
-    return this
+    return _this
   }
 
   lz_prototype.take = function (n) {
+    var _this = this
     var results = []
     var item
 
     while (n-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       results.push(item)
     }
 
-    this._list = this._value = results
+    _this._l = _this._v = results
 
     // reset
-    this._fn = []
-    this._i = 0
-    this.length = this._list.length
+    _this._f = []
+    _this._i = 0
+    _this.length = _this._l.length
 
-    return this
+    return _this
   }
 
   lz_prototype.takeWhile = function (fn) {
+    var _this = this
     var results = []
     var result
     var item
 
     while (true) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       result = fn(item)
       if (result === true) results.push(item)
       else break
     }
 
-    this._list = this._value = results
+    _this._l = _this._v = results
 
     // reset
-    this._fn = []
-    this._i = 0
-    this.length = this._list.length
+    _this._f = []
+    _this._i = 0
+    _this.length = _this._l.length
 
-    return this
+    return _this
   }
 
   lz_prototype.empty = function () {
@@ -271,67 +285,72 @@
   }
 
   lz_prototype.zipWith = function (fn, list) {
-    return lz.zipWith(fn, list, this._list)
+    return lz.zipWith(fn, list, this._l)
   }
 
   // Values
 
   lz_prototype.all = function (fn) {
+    var _this = this
     var item
-    var i = this.length
+    var i = _this.length
 
     while (i-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
-      if (fn(item) === false) return this._r(false)
+      if (fn(item) === false) return _this._r(false)
     }
 
-    return this._r(true)
+    return _this._r(true)
   }
 
   lz_prototype.and = function () {
+    var _this = this
     var item
-    var i = this.length
+    var i = _this.length
 
     while (i-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
-      if (!item) return this._r(false)
+      if (!item) return _this._r(false)
     }
 
-    return this._r(true)
+    return _this._r(true)
   }
 
   lz_prototype.any = function (fn) {
+    var _this = this
     var item
-    var i = this.length
+    var i = _this.length
 
     while (i-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
-      if (fn(item) === true) return this._r(true)
+      if (fn(item) === true) return _this._r(true)
     }
 
-    return this._r(false)
+    return _this._r(false)
   }
 
   lz_prototype.at = function (n) {
-    n = n < 0 ? this.length + n : n
-    if (n < 0) return this._r(null)
+    var _this = this
+    n = n < 0 ? _this.length + n : n
+    if (n < 0) return _this._r(null)
 
     while (--n >= 0) {
-      if (this._next() === UNDEFINED) return this._r(null)
+      if (_this._n() === UNDEFINED) return _this._r(null)
     }
 
-    var item = this._next()
-    return this._r(item === UNDEFINED ? null : item)
+    var item = _this._n()
+    return _this._r(item === UNDEFINED ? null : item)
   }
 
   lz_prototype.chain = function (f) {
+    var _this = this
     if (typeof f !== 'function') {
       throw new TypeError('Chain argument must be a function')
     }
-    var result = f(this._value || this._list)
+    var result = f(_this._v || _this._l)
     if (result instanceof lz) {
       return result
     } else {
@@ -340,71 +359,76 @@
   }
 
   lz_prototype.foldl = function (fn) {
+    var _this = this
     var result, next
-    var i = this.length
+    var i = _this.length
 
-    result = this._next()
-    if (result === UNDEFINED) return this._r(null)
+    result = _this._n()
+    if (result === UNDEFINED) return _this._r(null)
 
     while (i-- > 0) {
-      next = this._next()
+      next = _this._n()
       if (next === UNDEFINED) break
       result = fn(result, next)
     }
 
-    return this._r(result)
+    return _this._r(result)
   }
 
   lz_prototype.elem = function (x) {
+    var _this = this
     var item
-    var i = this.length
+    var i = _this.length
     var notANumber = isNaN(x)
 
     while (i-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
 
       if (item === x) {
-        return this._r(x !== 0 || 1 / x === 1 / item)
+        return _this._r(x !== 0 || 1 / x === 1 / item)
       } else if (notANumber && x !== x && item !== item) {
-        return this._r(true)
+        return _this._r(true)
       }
     }
 
-    return this._r(false)
+    return _this._r(false)
   }
 
   lz_prototype.head = function () {
-    var item = this._next()
-    return this._r(item === UNDEFINED ? null : item)
+    var _this = this
+    var item = _this._n()
+    return _this._r(item === UNDEFINED ? null : item)
   }
 
   lz_prototype.last = function () {
+    var _this = this
     var n = -1
     var result
     var item
 
-    while (++n < this.length) {
-      item = this._next()
+    while (++n < _this.length) {
+      item = _this._n()
       if (item === UNDEFINED) break
       result = item
     }
 
-    return this._r(result)
+    return _this._r(result)
   }
 
   lz_prototype.nil = function () {
+    var _this = this
     var item
-    if (this.length === 0) return this._r(true)
-    var i = this.length
+    if (_this.length === 0) return _this._r(true)
+    var i = _this.length
 
     while (i-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
-      if (item != null) return this._r(false)
+      if (item != null) return _this._r(false)
     }
 
-    return this._r(true)
+    return _this._r(true)
   }
 
   lz_prototype.max = function (fn) {
@@ -416,83 +440,87 @@
   }
 
   lz_prototype.or = function () {
+    var _this = this
     var item
-    var i = this.length
+    var i = _this.length
 
     while (i-- > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
-      if (!!item) return this._r(true)
+      if (!!item) return _this._r(true)
     }
 
-    return this._r(false)
+    return _this._r(false)
   }
 
   lz_prototype.$ = lz_prototype.toArray = function () {
-    if (this._value) {
-      return this._value
+    var _this = this
+    if (_this._v) {
+      return _this._v
     }
 
     var results = []
     var item
-    var n = this.length
+    var n = _this.length
 
     while (n > 0) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       results.push(item)
       n -= 1
     }
 
     // reset
-    this._value = results
-    this._fn = []
-    this._i = 0
+    _this._v = results
+    _this._f = []
+    _this._i = 0
 
     return results
   }
 
   lz_prototype.toString = function (joinBy) {
+    var _this = this
     if (typeof joinBy !== 'string') {
       joinBy = ''
     }
 
-    if (this._value) {
-      return typeof this._value === 'string'
-        ? this._value
-        : this._value.join(joinBy)
+    if (_this._v) {
+      return typeof _this._v === 'string'
+        ? _this._v
+        : _this._v.join(joinBy)
     }
 
     var result = ''
     var item, next
 
     while (true) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       result += item
-      next = this._next()
+      next = _this._n()
       if (next === UNDEFINED) break
       result += joinBy + next
     }
 
     // reset
-    this._value = result
-    this._fn = []
-    this._i = 0
+    _this._v = result
+    _this._f = []
+    _this._i = 0
 
     return result
   }
 
   // @value XXX
   lz_prototype.unlines = function () {
+    var _this = this
     var result = ''
     var item, next
 
     while (true) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       result += item
-      next = this._next()
+      next = _this._n()
       if (next === UNDEFINED) break
       result += '\n' + next
     }
@@ -502,14 +530,15 @@
 
   // @value XXX
   lz_prototype.unwords = function () {
+    var _this = this
     var result = ''
     var item, next
 
     while (true) {
-      item = this._next()
+      item = _this._n()
       if (item === UNDEFINED) break
       result += item
-      next = this._next()
+      next = _this._n()
       if (next === UNDEFINED) break
       result += ' ' + next
     }
@@ -529,7 +558,7 @@
     }
 
     var instance = new lz(results)
-    instance._value = results
+    instance._v = results
 
     return instance
   }
@@ -538,11 +567,11 @@
     var z = new lz(list)
     var length = list.length
     z.length = Infinity
-    z._next = function () {
+    z._n = function () {
       if (this._i === length) {
         this._i = 0
       }
-      return _next.call(this)
+      return _n.call(this)
     }
     return z
   }
@@ -569,11 +598,11 @@
     if (arr instanceof lz) {
       index = arr.length
 
-      value = arr._next()
+      value = arr._n()
       if (value === UNDEFINED) return null
 
       while (index-- > 0) {
-        item = arr._next()
+        item = arr._n()
         if (item === UNDEFINED) break
         value = fn(value, item)
       }
@@ -590,10 +619,10 @@
     var z = new lz([])
     var result
     z.length = Infinity
-    z._next = function () {
+    z._n = function () {
       result = fn(result) || n
-      this._list.push(result)
-      return _next.call(this)
+      this._l.push(result)
+      return _n.call(this)
     }
     return z
   }
@@ -647,16 +676,16 @@
   lz.range = function (start, end) {
     var z = new lz([])
     z.length = end
-    z.pre = function (i) { this._list[i] = i + start }
+    z._p = function (i) { this._l[i] = i + start }
     return z
   }
 
   lz.repeat = function (n) {
     var z = new lz([])
     z.length = Infinity
-    z._next = function () {
-      this._list.push(n)
-      return _next.call(this)
+    z._n = function () {
+      this._l.push(n)
+      return _n.call(this)
     }
     return z
   }
@@ -664,7 +693,7 @@
   lz.replicate = function (times, n) {
     var z = new lz([])
     z.length = times
-    z.pre = function (i) { this._list[i] = n }
+    z._p = function (i) { this._l[i] = n }
     return z
   }
 
@@ -681,7 +710,7 @@
     z.length = list1.length < list2.length ? list1.length : list2.length
 
     if (!(list1 instanceof lz) && !(list2 instanceof lz)) {
-      z._next = function () {
+      z._n = function () {
         if (this._i >= this.length) return UNDEFINED
         return fn(list1[this._i], list2[this._i++])
       }
@@ -689,9 +718,9 @@
     } else {
       if (!(list1 instanceof lz)) list1 = lz(list1)
       if (!(list2 instanceof lz)) list2 = lz(list2)
-      z._next = function () {
-        this._list.push(fn(list1._next(), list2._next()))
-        return _next.call(this)
+      z._n = function () {
+        this._l.push(fn(list1._n(), list2._n()))
+        return _n.call(this)
       }
       return z
     }

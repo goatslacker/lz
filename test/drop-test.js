@@ -26,7 +26,7 @@ module.exports = {
         return n % 2 === 0
       })
       .drop(2)
-      ._list,
+      ._l,
       // i'm cheating here, using list to check our internal list
       // this makes sure that we aren't filtering past our dropping point
       [5, 6]
