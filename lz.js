@@ -321,6 +321,18 @@
     return this._r(item === UNDEFINED ? null : item)
   }
 
+  lz_prototype.chain = function (f) {
+    if (typeof f !== 'function') {
+      throw new TypeError('Chain argument must be a function')
+    }
+    var result = f(this._value || this._list)
+    if (result instanceof lz) {
+      return result
+    } else {
+      return new lz(result.length ? result : [result])
+    }
+  }
+
   lz_prototype.foldl = function (fn) {
     var result, next
     var i = this.length
