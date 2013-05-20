@@ -178,6 +178,10 @@
     return this
   }
 
+  lz_prototype.of = function (b) {
+    return new lz(b)
+  }
+
   lz_prototype.scanl = function (fn) {
     this._value = null
     var prev
@@ -254,6 +258,10 @@
     this.length = this._list.length
 
     return this
+  }
+
+  lz_prototype.zero = function () {
+    return new lz([])
   }
 
   lz_prototype.zipWith = function (fn, list) {
@@ -418,7 +426,10 @@
       n -= 1
     }
 
+    // reset
     this._value = results
+    this._fn = []
+    this._i = 0
 
     return results
   }
@@ -444,7 +455,10 @@
       result += joinBy + next
     }
 
+    // reset
     this._value = result
+    this._fn = []
+    this._i = 0
 
     return result
   }
@@ -606,6 +620,10 @@
     return value
   }
 
+  lz.of = function (b) {
+    return new lz(b)
+  }
+
   lz.range = function (start, end) {
     var z = new lz([])
     z.length = end
@@ -632,6 +650,10 @@
 
   lz.words = function (str) {
     return new lz(str.split(' '))
+  }
+
+  lz.zero = function () {
+    return new lz([])
   }
 
   lz.zipWith = function (fn, list1, list2) {
