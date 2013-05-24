@@ -260,7 +260,7 @@
     return this
   }
 
-  lz_prototype.zero = function () {
+  lz_prototype.empty = function () {
     return new lz([])
   }
 
@@ -664,7 +664,7 @@
     return new lz(str.split(' '))
   }
 
-  lz.zero = function () {
+  lz.empty = function () {
     return new lz([])
   }
 
