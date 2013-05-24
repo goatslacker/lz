@@ -452,7 +452,9 @@
     }
 
     if (this._value) {
-      return this._value.join(joinBy)
+      return typeof this._value === 'string'
+        ? this._value
+        : this._value.join(joinBy)
     }
 
     var result = ''
