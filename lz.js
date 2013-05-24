@@ -26,6 +26,12 @@
     return item
   }
 
+  function push(list, x) {
+    return typeof list === 'string'
+      ? list.concat(x)
+      : (list.push(x), list)
+  }
+
   function lz(list) {
     if (!(this instanceof lz)) {
       return new lz(list)
@@ -74,7 +80,7 @@
       this._fn.push(function (x) {
         if (this._i > length) {
           x = arr._next()
-          this._list.push(x)
+          this._list = push(this._list, x)
         }
         return x
       }.bind(this))
@@ -82,7 +88,7 @@
       this._fn.push(function (x) {
         if (this._i > length) {
           x = arr[this._i - length - 1]
-          this._list.push(x)
+          this._list = push(this._list, x)
         }
         return x
       }.bind(this))
