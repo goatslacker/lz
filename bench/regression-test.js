@@ -38,7 +38,7 @@ https.get(uri, function (res) {
       lazy: new context.lz(data.a)
     })
 
-    run()
+    run(process.argv.slice(2))
   })
 })
 
@@ -59,6 +59,14 @@ function runTests(benchmarks) {
     bench.show(result)
     runTests(benchmarks)
   })
+}
+
+function toObject(obj, keys) {
+  var ret = {}
+  keys.forEach(function (key) {
+    ret[key] = obj[key]
+  })
+  return ret
 }
 
 function compare(tests) {
@@ -82,8 +90,8 @@ function compare(tests) {
   runTests(benchmarks)
 }
 
-function run() {
-  compare({
+function run(to_run) {
+  var tests = {
     any: [function (n) { return n === 5 }],
 
     elem: [5],
@@ -163,5 +171,7 @@ function run() {
           .and()
       }
     },
-  })
+  }
+
+  compare(to_run.length ? toObject(tests, to_run) : tests)
 }
