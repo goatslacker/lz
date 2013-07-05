@@ -1,4 +1,5 @@
 var lz = require('../')
+var lzy = require('../lzy')
 var _ = require('lodash')
 var wu = require('wu').wu
 
@@ -29,11 +30,17 @@ function _wu() {
   return r
 }
 
+function _lzy() {
+  return lzy.take(5, lzy.map(sqr, data))
+}
+
 assert.deepEqual(_lodash(), _lz())
 assert.deepEqual(_lz(), _wu())
+assert.deepEqual(_lz(), _lzy())
 
 require('./')({
   'lodash': _lodash,
   'lz': _lz,
-  'wu': _wu
+  'wu': _wu,
+  'lzy': _lzy
 })

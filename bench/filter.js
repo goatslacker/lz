@@ -1,4 +1,5 @@
 var lz = require('../')
+var lzy = require('../lzy')
 var _ = require('lodash')
 var wu = require('wu').wu
 
@@ -22,11 +23,17 @@ function _wu() {
   return wu(data).filter(even).next()
 }
 
+function _lzy() {
+  return lzy.head(lzy.filter(even, [1, 2, 3]))
+}
+
 assert.deepEqual(_lodash(), _lz())
 assert.deepEqual(_lz(), _wu())
+assert.deepEqual(_wu(), _lzy())
 
 require('./')({
   'lodash': _lodash,
   'lz': _lz,
-  'wu': _wu
+  'wu': _wu,
+  'lzy': _lzy
 })
