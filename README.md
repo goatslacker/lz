@@ -25,7 +25,7 @@ fizzbuzz.take(5).toArray()
 ```javascript
   // Return factorial of 4
   // note you should use `new` but you don't have to
-  new lz([1, 2, 3, 4]).scanl(function (a, b) { return a * b }).at(5)
+  new lz([1, 2, 3, 4]).scanl(function (a, b) { return a * b }).at(3)
 ```
 
 
