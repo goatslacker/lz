@@ -1,6 +1,8 @@
 `lz`
 ==
 
+[![NPM version](https://badge.fury.io/js/lz.png)](http://badge.fury.io/js/lz)
+
 the fastest[¹](#speed) functional lazy library for JavaScript.
 
 this isn't an FP do-it-all library[²](https://github.com/clux/interlude) --
