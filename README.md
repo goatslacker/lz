@@ -1,6 +1,7 @@
 `lz`
 ==
 
+[![Build Status](https://secure.travis-ci.org/goatslacker/fu.png)](http://travis-ci.org/goatslacker/fu)
 [![NPM version](https://badge.fury.io/js/lz.png)](http://badge.fury.io/js/lz)
 
 the fastest[¹](#speed) functional lazy library for JavaScript.

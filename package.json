@@ -8,7 +8,7 @@
   },
   "main": "lz.js",
   "scripts": {
-    "test": "testla test"
+    "test": "./node_modules/testla/bin/testla test"
   },
   "dependencies": {},
   "devDependencies": {
