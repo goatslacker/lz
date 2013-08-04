@@ -1,4 +1,3 @@
-(function (exports) {
 /*jshint
   asi: true,
   boss: true,
@@ -10,6 +9,21 @@
   plusplus: false,
   validthis: true
 */
+;(function (name, definition) {
+  'use strict';
+  if (typeof define == 'function') {
+    define(definition)
+  } else if (typeof module != 'undefined' && module.exports) {
+    module.exports = definition()
+  } else {
+    var Module = definition(), global = this, old = global[name]
+    Module.noConflict = function () {
+      global[name] = old
+      return Module
+    }
+    global[name] = Module
+  }
+}).call(this, 'lz', function () {
   'use strict';
 
   var UNDEFINED = {}
@@ -734,10 +748,5 @@
 
   lz.not = function (b) { return !b }
 
-
-  if (typeof module !== 'undefined') {
-    module.exports = lz
-  } else {
-    exports.lz = lz
-  }
-}(this));
+  return lz
+});
